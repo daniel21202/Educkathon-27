@@ -1,0 +1,3096 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>DreamDesk — Seu futuro, sua matéria</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #05060B;
+            --bg-elevated: #0C0E18;
+            --bg-card: #12141F;
+            --bg-card-hover: #191C2C;
+            --border: rgba(255, 255, 255, 0.06);
+            --border-strong: rgba(255, 255, 255, 0.13);
+            --dawn: #D9954F;
+            --dawn-soft: #EFC088;
+            --mint: #3FBFA0;
+            --violet: #8F7FE0;
+            --text: #EEEAE1;
+            --text-muted: #888CA6;
+            --text-dim: #494C67;
+            --on-dawn: #1C1206;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        body {
+            min-height: 100vh;
+            padding-bottom: 78px;
+            position: relative;
+            background-image:
+                radial-gradient(ellipse 900px 500px at 15% -5%, rgba(217, 149, 79, 0.09), transparent 60%),
+                radial-gradient(ellipse 700px 600px at 100% 15%, rgba(143, 127, 224, 0.08), transparent 55%),
+                radial-gradient(ellipse 800px 500px at 50% 100%, rgba(63, 191, 160, 0.05), transparent 60%);
+            background-attachment: fixed;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.035;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .screen {
+            position: relative;
+            z-index: 1;
+        }
+
+        ::selection {
+            background: var(--dawn);
+            color: var(--on-dawn);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 32px 20px 60px;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeUp .5s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wrap {
+            max-width: 920px;
+            margin: 0 auto;
+        }
+
+        .eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--dawn-soft);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 16px;
+            height: 1px;
+            background: var(--dawn-soft);
+        }
+
+        /* ---------- HERO ---------- */
+        #screen-hero {
+            padding-top: 64px;
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 56px;
+        }
+
+        .logo-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--dawn), var(--violet));
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .logo-mark::after {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border-radius: 3px;
+            background: var(--bg);
+        }
+
+        .logo-word {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .hero-q {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 44px;
+            line-height: 1.08;
+            margin-bottom: 22px;
+            max-width: 640px;
+        }
+
+        .hero-title em {
+            font-style: normal;
+            color: var(--dawn);
+        }
+
+        .hero-sub {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 520px;
+            line-height: 1.6;
+            margin-bottom: 38px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(155deg, var(--dawn-soft), var(--dawn));
+            color: var(--on-dawn);
+            font-weight: 700;
+            font-size: 15px;
+            padding: 15px 26px;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 12px 24px -12px rgba(217, 149, 79, 0.55);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 16px 34px -10px rgba(217, 149, 79, 0.6);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border-strong);
+            color: var(--text);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--dawn-soft);
+            box-shadow: none;
+        }
+
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 13px;
+            border-radius: 9px;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 64px;
+            max-width: 760px;
+        }
+
+        .pain-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .pain-card .num {
+            font-family: 'Space Mono', monospace;
+            color: var(--text-dim);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .pain-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ---------- DREAM PICKER ---------- */
+        .dream-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .dream-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 16px;
+            text-align: left;
+            transition: all .18s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 26px -18px rgba(0, 0, 0, 0.7);
+        }
+
+        .dream-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-strong);
+            transform: translateY(-3px);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 20px 34px -16px rgba(0, 0, 0, 0.8);
+        }
+
+        .dream-card.selected {
+            border-color: var(--dawn);
+            background: var(--bg-card-hover);
+            box-shadow: 0 0 0 1px var(--dawn), 0 14px 30px -14px rgba(217, 149, 79, 0.35);
+        }
+
+        .dream-emoji {
+            font-size: 30px;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .dream-name {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .dream-tag {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ---------- NAV ---------- */
+        .appnav {
+            position: fixed !important;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 6, 11, 0.92);
+            backdrop-filter: blur(14px);
+            border-top: 1px solid var(--border);
+            display: none;
+            z-index: 100;
+            padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+        }
+
+        .appnav.show {
+            display: flex;
+        }
+
+        .navitem {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 4px;
+            border: none;
+            background: none;
+            color: var(--text-dim);
+            font-size: 10.5px;
+            font-family: 'Space Mono', monospace;
+            border-radius: 10px;
+        }
+
+        .navitem.active {
+            color: var(--dawn-soft);
+        }
+
+        .navitem .ic {
+            font-size: 18px;
+        }
+
+        /* ---------- TOPBAR (post-onboarding) ---------- */
+        .topbar {
+            max-width: 920px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 6px;
+        }
+
+        .profile-chip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 14px 8px 8px;
+            border-radius: 100px;
+        }
+
+        .profile-chip .em {
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-chip .lbl {
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .profile-chip .lbl b {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ---------- FUTURE LINE (signature element) ---------- */
+        .futureline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px 22px 22px;
+            margin-bottom: 26px;
+        }
+
+        .fl-title {
+            font-size: 19px;
+            margin-bottom: 4px;
+        }
+
+        .fl-sub {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-bottom: 26px;
+        }
+
+        .fl-track {
+            position: relative;
+            padding: 0 4px;
+        }
+
+        .fl-svg {
+            width: 100%;
+            height: 64px;
+            display: block;
+        }
+
+        .fl-path {
+            fill: none;
+            stroke: var(--border-strong);
+            stroke-width: 2;
+            stroke-dasharray: 4 6;
+        }
+
+        .fl-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .fl-labels span {
+            font-family: 'Space Mono', monospace;
+            font-size: 10.5px;
+            color: var(--text-dim);
+            text-align: center;
+            flex: 1;
+        }
+
+        .skills-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .skill-col h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 12px;
+        }
+
+        .skill-col.have h4 {
+            color: var(--mint);
+        }
+
+        .skill-col.grow h4 {
+            color: var(--violet);
+        }
+
+        .skill-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            font-size: 12.5px;
+            padding: 7px 12px;
+            border-radius: 100px;
+            margin: 0 6px 8px 0;
+        }
+
+        .skill-col.have .skill-pill::before {
+            content: '●';
+            color: var(--mint);
+            font-size: 8px;
+        }
+
+        .skill-col.grow .skill-pill::before {
+            content: '○';
+            color: var(--violet);
+            font-size: 8px;
+        }
+
+        /* ---------- SUBJECT CARDS ---------- */
+        .section-label {
+            font-size: 19px;
+            margin: 38px 0 16px;
+        }
+
+        .subject-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 26px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        .subject-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .subject-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .subject-name {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 15.5px;
+            flex: 1;
+        }
+
+        .subject-chevron {
+            font-size: 13px;
+            color: var(--text-dim);
+            transition: transform .2s ease;
+            flex-shrink: 0;
+        }
+
+        .subject-card.open .subject-chevron {
+            transform: rotate(180deg);
+        }
+
+        .subject-example {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            padding-left: 48px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .subject-card.open .subject-example {
+            display: block;
+        }
+
+        .subject-example b {
+            color: var(--dawn-soft);
+            font-weight: 600;
+        }
+
+        /* ---------- SIMULATOR ---------- */
+        .sim-header {
+            margin-bottom: 26px;
+        }
+
+        .sim-timeline {
+            position: relative;
+            padding-left: 26px;
+            border-left: 2px dashed var(--border-strong);
+        }
+
+        .sim-step {
+            position: relative;
+            padding-bottom: 26px;
+        }
+
+        .sim-step::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 2px solid var(--dawn);
+        }
+
+        .sim-time {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            color: var(--dawn-soft);
+            margin-bottom: 4px;
+        }
+
+        .sim-activity {
+            font-size: 15px;
+            margin-bottom: 6px;
+            line-height: 1.4;
+        }
+
+        .sim-tag {
+            display: inline-block;
+            font-size: 11px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 100px;
+            color: var(--text-muted);
+        }
+
+        /* ---------- STUDY TIMER ---------- */
+        .study-timer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 24px 22px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 26px -20px rgba(0, 0, 0, 0.7);
+            --timer-color: var(--dawn);
+        }
+
+        .study-timer-card.mode-pausa {
+            --timer-color: var(--mint);
+        }
+
+        .study-timer-card.mode-pausaLonga {
+            --timer-color: var(--violet);
+        }
+
+        .study-timer-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .study-timer-head p {
+            max-width: 380px;
+        }
+
+        .study-timer-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            border-radius: 100px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .study-timer-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .study-timer-ring {
+            position: relative;
+            width: 168px;
+            height: 168px;
+            flex-shrink: 0;
+        }
+
+        .ring-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: var(--border-strong);
+            stroke-width: 8;
+        }
+
+        .ring-fg {
+            fill: none;
+            stroke: var(--timer-color);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s linear, stroke .3s ease;
+        }
+
+        .study-timer-display {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .study-timer-controls {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .study-timer-modes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .timer-mode-btn {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 100px;
+            transition: all .15s ease;
+        }
+
+        .timer-mode-btn.active {
+            background: var(--timer-color);
+            border-color: transparent;
+            color: var(--on-dawn);
+        }
+
+        .study-timer-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .study-timer-card.pulse .study-timer-ring {
+            animation: timerPulse .6s ease;
+        }
+
+        @keyframes timerPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.06);
+            }
+        }
+
+        @media (min-width: 640px) {
+            .study-timer-body {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .study-timer-controls {
+                align-items: flex-start;
+                width: auto;
+            }
+
+            .study-timer-modes,
+            .study-timer-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        /* ---------- FLOATING TIMER CLOUD ---------- */
+        .timer-cloud {
+            display: none;
+            align-items: center;
+            gap: 10px;
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 200;
+            background: rgba(18, 20, 31, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border-strong);
+            border-radius: 100px;
+            padding: 8px 8px 8px 16px;
+            box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.65), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
+            animation: cloudPop .3s ease;
+            --timer-color: var(--dawn);
+        }
+
+        .timer-cloud.show {
+            display: flex;
+        }
+
+        .timer-cloud.mode-pausa {
+            --timer-color: var(--mint);
+        }
+
+        .timer-cloud.mode-pausaLonga {
+            --timer-color: var(--violet);
+        }
+
+        @keyframes cloudPop {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(.92);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .timer-cloud-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--timer-color);
+            flex-shrink: 0;
+            animation: cloudPulse 1.6s ease infinite;
+        }
+
+        .timer-cloud.paused .timer-cloud-dot {
+            animation: none;
+            opacity: .35;
+        }
+
+        @keyframes cloudPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(217, 149, 79, .45);
+            }
+
+            70% {
+                box-shadow: 0 0 0 6px rgba(217, 149, 79, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(217, 149, 79, 0);
+            }
+        }
+
+        .timer-cloud-time {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            min-width: 42px;
+        }
+
+        .timer-cloud-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .timer-cloud-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-elevated);
+            color: var(--text);
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .15s ease;
+            flex-shrink: 0;
+        }
+
+        .timer-cloud-btn:hover {
+            border-color: var(--timer-color);
+            color: var(--timer-color);
+        }
+
+        .timer-cloud-btn.stop:hover {
+            border-color: #E0645A;
+            color: #E0645A;
+        }
+
+        .timer-cloud.pulse {
+            animation: timerPulse .6s ease;
+        }
+
+        @media (min-width: 900px) {
+            .timer-cloud {
+                left: 234px;
+            }
+        }
+
+        /* ---------- TALENT QUIZ ---------- */
+        .quiz-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px 22px;
+        }
+
+        .quiz-progress {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 24px;
+        }
+
+        .quiz-progress i {
+            flex: 1;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--border-strong);
+        }
+
+        .quiz-progress i.done {
+            background: var(--violet);
+        }
+
+        .quiz-q {
+            font-size: 19px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .quiz-opt {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 15px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 14.5px;
+            transition: all .15s;
+        }
+
+        .quiz-opt:hover {
+            border-color: var(--violet);
+            background: var(--bg-card-hover);
+        }
+
+        .talent-result {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .talent-badge {
+            width: 84px;
+            height: 84px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--violet), var(--dawn));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin: 0 auto 20px;
+        }
+
+        .talent-result h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .talent-result p {
+            color: var(--text-muted);
+            max-width: 440px;
+            margin: 0 auto 24px;
+            line-height: 1.6;
+            font-size: 14.5px;
+        }
+
+        .talent-match {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            max-width: 440px;
+            margin: 0 auto 22px;
+            text-align: left;
+        }
+
+        .talent-match b {
+            color: var(--dawn-soft);
+        }
+
+        .talent-match-yes {
+            border-color: var(--dawn);
+            background: rgba(217, 149, 79, 0.08);
+            color: var(--text);
+        }
+
+        .quiz-loading {
+            text-align: center;
+            padding: 44px 10px;
+        }
+
+        .quiz-spinner {
+            display: block;
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-strong);
+            border-top-color: var(--dawn-soft);
+            border-radius: 50%;
+            margin: 0 auto 18px;
+            animation: spin .8s linear infinite;
+        }
+
+        .quiz-loading p {
+            color: var(--text-muted);
+            font-size: 13.5px;
+        }
+
+        /* ---------- VOCATIONAL TEST ---------- */
+        .voc-intro {
+            text-align: center;
+            padding: 10px 0 6px;
+        }
+
+        .voc-intro .talent-badge {
+            background: linear-gradient(135deg, var(--mint), var(--violet));
+        }
+
+        .voc-intro p {
+            color: var(--text-muted);
+            max-width: 460px;
+            margin: 0 auto 26px;
+            line-height: 1.6;
+            font-size: 14.5px;
+        }
+
+        .voc-result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto 22px;
+            text-align: left;
+        }
+
+        .voc-result-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: left;
+            width: 100%;
+            transition: all .15s;
+        }
+
+        .voc-result-card:hover {
+            border-color: var(--mint);
+            background: var(--bg-card-hover);
+        }
+
+        .voc-result-card.rank-1 {
+            border-color: var(--dawn);
+            background: rgba(217, 149, 79, 0.08);
+        }
+
+        .voc-rank {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            flex-shrink: 0;
+            width: 20px;
+        }
+
+        .voc-result-emoji {
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .voc-result-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .voc-result-info .name {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 15.5px;
+            margin-bottom: 2px;
+        }
+
+        .voc-result-info .tag {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .voc-result-arrow {
+            font-size: 16px;
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+
+        .voc-entry-link {
+            background: none;
+            border: none;
+            color: var(--dawn-soft);
+            font-size: 13.5px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+            margin-top: 4px;
+        }
+
+        /* ---------- ENEM STUDY ---------- */
+        .enem-intro {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            max-width: 620px;
+            line-height: 1.6;
+            margin-bottom: 26px;
+        }
+
+        .enem-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 26px;
+            scrollbar-width: none;
+        }
+
+        .enem-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .enem-tab {
+            flex-shrink: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .enem-tab.active {
+            background: var(--dawn);
+            border-color: var(--dawn);
+            color: var(--on-dawn);
+        }
+
+        .enem-subject {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 14px 26px -20px rgba(0, 0, 0, 0.7);
+        }
+
+        .enem-subject-head {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 18px 18px;
+            background: none;
+            border: none;
+            color: var(--text);
+            text-align: left;
+        }
+
+        .enem-subject-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: var(--bg-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            flex-shrink: 0;
+        }
+
+        .enem-subject-titles {
+            flex: 1;
+        }
+
+        .enem-subject-name {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .enem-subject-count {
+            font-size: 12px;
+            color: var(--text-dim);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .enem-chevron {
+            font-size: 13px;
+            color: var(--text-dim);
+            transition: transform .2s ease;
+            flex-shrink: 0;
+        }
+
+        .enem-subject.open .enem-chevron {
+            transform: rotate(180deg);
+        }
+
+        .enem-topics {
+            display: none;
+            padding: 0 18px 18px;
+        }
+
+        .enem-subject.open .enem-topics {
+            display: block;
+        }
+
+        .enem-topic {
+            border-top: 1px solid var(--border);
+            padding: 14px 0 14px 0;
+        }
+
+        .enem-topic-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+
+        .enem-topic-name {
+            font-size: 14.5px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .enem-topic-chevron {
+            font-size: 11px;
+            color: var(--text-dim);
+            transition: transform .2s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .enem-topic.open .enem-topic-chevron {
+            transform: rotate(180deg);
+        }
+
+        .enem-freq {
+            flex-shrink: 0;
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.03em;
+            padding: 3px 9px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .enem-freq.alta {
+            background: rgba(217, 149, 79, 0.14);
+            color: var(--dawn-soft);
+        }
+
+        .enem-freq.media {
+            background: rgba(143, 127, 224, 0.14);
+            color: var(--violet);
+        }
+
+        .enem-topic-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        .enem-topic-explain {
+            display: none;
+            margin-top: 12px;
+            padding: 14px 16px;
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--mint);
+            border-radius: 10px;
+            font-size: 13.5px;
+            line-height: 1.65;
+            color: var(--text);
+        }
+
+        .enem-topic-explain-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 10.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--mint);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .enem-topic.open .enem-topic-explain {
+            display: block;
+        }
+
+        .enem-search {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            color: var(--text);
+            font-size: 14px;
+            padding: 13px 16px;
+            border-radius: 12px;
+            font-family: inherit;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .enem-search:focus {
+            outline: none;
+            border-color: var(--dawn-soft);
+        }
+
+        .enem-search::placeholder {
+            color: var(--text-dim);
+        }
+
+        .enem-empty {
+            color: var(--text-dim);
+            font-size: 14px;
+            padding: 20px 4px;
+        }
+
+        .enem-reco {
+            background: linear-gradient(135deg, rgba(217, 149, 79, 0.1), rgba(143, 127, 224, 0.08));
+            border: 1px solid var(--border-strong);
+            border-radius: 16px;
+            padding: 18px 20px;
+            margin-bottom: 22px;
+        }
+
+        .enem-reco-title {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .enem-reco-title b {
+            color: var(--dawn-soft);
+        }
+
+        .enem-reco-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .enem-reco-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 100px;
+        }
+
+        .enem-reco-chip:hover {
+            border-color: var(--dawn-soft);
+        }
+
+        .enem-reco-chip-peso {
+            font-family: 'Space Mono', monospace;
+            font-size: 9.5px;
+            color: var(--text-dim);
+            background: var(--bg-card);
+            padding: 2px 7px;
+            border-radius: 100px;
+        }
+
+        .enem-reco-chip.peso-alto .enem-reco-chip-peso {
+            color: var(--dawn-soft);
+            background: rgba(217, 149, 79, 0.14);
+        }
+
+        .enem-reco-footnote {
+            font-size: 11.5px;
+            color: var(--text-dim);
+            line-height: 1.5;
+            margin-top: 12px;
+        }
+
+        .enem-match-badge.peso-alto {
+            background: rgba(217, 149, 79, 0.14);
+            color: var(--dawn-soft);
+        }
+
+        .enem-match-badge.peso-medio {
+            background: rgba(63, 191, 160, 0.14);
+            color: var(--mint);
+        }
+
+        .enem-subject.is-priority {
+            border-color: rgba(217, 149, 79, 0.45);
+        }
+
+        .enem-deep-note {
+            font-size: 12.5px;
+            color: var(--dawn-soft);
+            background: rgba(217, 149, 79, 0.08);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        .enem-topic-deep {
+            background: rgba(217, 149, 79, 0.04);
+            margin: 0 -8px;
+            padding: 14px 8px;
+            border-radius: 8px;
+        }
+
+        .enem-match-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10.5px;
+            font-family: 'Space Mono', monospace;
+            background: rgba(63, 191, 160, 0.14);
+            color: var(--mint);
+            padding: 3px 9px;
+            border-radius: 100px;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .enem-subject.is-match {
+            border-color: rgba(63, 191, 160, 0.4);
+        }
+
+        /* ---------- ENGINEERING HUB MODAL ---------- */
+        .dream-hub-badge {
+            margin-top: 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 10.5px;
+            color: var(--dawn-soft);
+            letter-spacing: 0.03em;
+        }
+
+        .eng-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 8, 20, 0.72);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .eng-modal-overlay.show {
+            display: flex;
+        }
+
+        .eng-modal {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-strong);
+            border-radius: 20px;
+            padding: 28px 24px;
+            max-width: 720px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .eng-modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .eng-modal-close:hover {
+            color: var(--text);
+            border-color: var(--border-strong);
+        }
+
+        .eng-modal-grid {
+            margin-top: 0;
+        }
+
+        @media (max-width:640px) {
+            .eng-modal-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ---------- DESKTOP SIDEBAR ---------- */
+        .sidebar {
+            display: none;
+        }
+
+        @media (min-width:900px) {
+            body {
+                padding-bottom: 0;
+                padding-left: 220px;
+            }
+
+            .sidebar {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 220px;
+                border-right: 1px solid var(--border);
+                padding: 28px 18px;
+                background: var(--bg-elevated);
+            }
+
+            .sidebar .logo-row {
+                margin-bottom: 44px;
+            }
+
+            .sidebar .navitem {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 12px;
+                font-size: 13px;
+                padding: 11px 12px;
+                margin-bottom: 4px;
+            }
+
+            .sidebar .navitem.active {
+                background: var(--bg-card);
+                color: var(--dawn-soft);
+            }
+
+            .appnav {
+                display: none !important;
+            }
+
+            .pain-grid,
+            .dream-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero-title {
+                font-size: 56px;
+            }
+
+            .skills-cols {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width:640px) {
+            .pain-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dream-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .skills-cols {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hide {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- DESKTOP SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+        <div class="logo-row">
+            <div class="logo-mark"></div><span class="logo-word">DreamDesk</span>
+        </div>
+        <button class="navitem active" data-nav="hero"><span class="ic">✦</span> Início</button>
+        <button class="navitem" data-nav="dashboard"><span class="ic">🗺️</span> Linha do futuro</button>
+        <button class="navitem" data-nav="simulator"><span class="ic">🎬</span> Simulador</button>
+        <button class="navitem" data-nav="quiz"><span class="ic">🧠</span> Talentos</button>
+        <button class="navitem" data-nav="enem"><span class="ic">📚</span> Estudar p/ ENEM</button>
+    </nav>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="screen active" id="screen-hero">
+        <div class="wrap">
+            <div class="logo-row">
+                <div class="logo-mark"></div><span class="logo-word">DreamDesk</span>
+            </div>
+            <div class="eyebrow">Educação com propósito</div>
+            <p class="hero-q mono">"Por que eu preciso aprender isso?"</p>
+            <h1 class="hero-title">Todo aluno já fez essa pergunta. <em>O DreamDesk responde.</em></h1>
+            <p class="hero-sub">A gente conecta cada matéria da escola ao sonho profissional do aluno — mostrando, na
+                prática, onde aquele conteúdo vai ser usado na vida real dele.</p>
+            <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                <button class="btn" onclick="goTo('picker')">Descobrir meu caminho →</button>
+                <button class="btn btn-ghost" onclick="goTo('vocacional')">🧭 Fazer teste vocacional</button>
+                <button class="btn btn-ghost" onclick="goTo('enem')">📚 Estudar para o ENEM</button>
+            </div>
+
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="num">01</div>
+                    <p>Alunos desmotivados, estudando só para a prova.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="num">02</div>
+                    <p>Matérias que parecem soltas, sem nenhuma conexão com a vida real.</p>
+                </div>
+                <div class="pain-card">
+                    <div class="num">03</div>
+                    <p>Muitos não sabem no que são bons — e se sentem perdidos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== DREAM PICKER ===================== -->
+    <section class="screen" id="screen-picker">
+        <div class="wrap">
+            <div class="eyebrow">Passo 1 de 1</div>
+            <h2 style="font-size:28px; margin-bottom:8px;">Qual é o seu sonho profissional?</h2>
+            <p style="color:var(--text-muted); font-size:14.5px; margin-bottom:8px;">Escolha o que mais combina com você
+                hoje. Dá pra mudar depois.</p>
+            <p style="margin-bottom:20px;">Ainda não sabe? <button class="voc-entry-link" onclick="goTo('vocacional')">Faça o teste vocacional →</button></p>
+            <div class="dream-grid" id="dreamGrid"></div>
+        </div>
+    </section>
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <section class="screen" id="screen-dashboard">
+        <div class="topbar">
+            <div class="eyebrow" style="margin:0;">Sua linha do futuro</div>
+            <button class="profile-chip" onclick="goTo('picker')">
+                <span class="em" id="chipEmoji">🎯</span>
+                <span class="lbl">Sonho: <b id="chipName">—</b></span>
+            </button>
+        </div>
+        <div class="wrap">
+            <div class="futureline-card">
+                <h3 class="fl-title">Do aluno de hoje até <span id="flDreamName" style="color:var(--dawn-soft);"></span>
+                </h3>
+                <p class="fl-sub">Um mapa do que você já tem — e do que vale desenvolver até lá.</p>
+                <div class="fl-track">
+                    <svg class="fl-svg" viewBox="0 0 600 64" preserveAspectRatio="none">
+                        <path class="fl-path" d="M10,32 C150,10 250,54 300,32 C350,10 450,54 590,32" id="flLine" />
+                        <circle cx="10" cy="32" r="7" fill="#3FBFA0" />
+                        <circle cx="300" cy="32" r="7" fill="#8F7FE0" />
+                        <circle cx="590" cy="32" r="9" fill="#D9954F" />
+                    </svg>
+                    <div class="fl-labels"><span>HOJE</span><span>DESENVOLVENDO</span><span
+                            id="flDreamLabel">SONHO</span></div>
+                </div>
+                <div class="skills-cols">
+                    <div class="skill-col have">
+                        <h4>Já tem</h4>
+                        <div id="skillsHave"></div>
+                    </div>
+                    <div class="skill-col grow">
+                        <h4>Precisa desenvolver</h4>
+                        <div id="skillsGrow"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-label">Suas matérias, conectadas ao seu sonho</h3>
+            <div id="subjectList"></div>
+
+            <button class="btn btn-sm btn-ghost" style="margin-top:8px;" onclick="goTo('simulator')">Ver um dia na vida
+                desse profissional →</button>
+        </div>
+    </section>
+
+    <!-- ===================== SIMULATOR ===================== -->
+    <section class="screen" id="screen-simulator">
+        <div class="topbar">
+            <div class="eyebrow" style="margin:0;">Simulador de futuro</div>
+            <button class="profile-chip" onclick="goTo('dashboard')"><span class="em">←</span><span
+                    class="lbl">Voltar</span></button>
+        </div>
+        <div class="wrap">
+            <div class="sim-header">
+                <h2 style="font-size:26px; margin-bottom:6px;">Um dia na vida de <span id="simDreamName"
+                        style="color:var(--dawn-soft);"></span></h2>
+                <p style="color:var(--text-muted); font-size:14.5px;">Repare onde entram matemática, comunicação,
+                    ciência e criatividade no dia a dia real da profissão.</p>
+            </div>
+
+            <div class="study-timer-card mode-foco" id="studyTimerCard">
+                <div class="study-timer-head">
+                    <div>
+                        <div class="eyebrow" style="margin:0 0 6px;">Cronômetro de estudos</div>
+                        <p style="color:var(--text-muted); font-size:13.5px; line-height:1.5; margin:0;">Antes de
+                            continuar explorando, separe um tempo de foco de verdade — o método pomodoro ajuda a
+                            manter a concentração.</p>
+                    </div>
+                    <div class="study-timer-count" id="studyTimerCount">0 sessões hoje</div>
+                </div>
+                <div class="study-timer-body">
+                    <div class="study-timer-ring">
+                        <svg viewBox="0 0 160 160" class="ring-svg">
+                            <circle cx="80" cy="80" r="70" class="ring-bg"></circle>
+                            <circle cx="80" cy="80" r="70" class="ring-fg" id="ringFg"></circle>
+                        </svg>
+                        <div class="study-timer-display mono" id="timerDisplay">25:00</div>
+                    </div>
+                    <div class="study-timer-controls">
+                        <div class="study-timer-modes" id="timerModes">
+                            <button class="timer-mode-btn active" data-mins="25" data-mode="foco">25 min ·
+                                Foco</button>
+                            <button class="timer-mode-btn" data-mins="5" data-mode="pausa">5 min · Pausa</button>
+                            <button class="timer-mode-btn" data-mins="15" data-mode="pausaLonga">15 min · Pausa
+                                longa</button>
+                        </div>
+                        <div class="study-timer-actions">
+                            <button class="btn btn-sm" id="timerStartBtn">▶ Iniciar</button>
+                            <button class="btn btn-sm btn-ghost" id="timerResetBtn">↺ Zerar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sim-timeline" id="simTimeline"></div>
+            <button class="btn btn-sm" onclick="goTo('quiz')">Descobrir meus talentos →</button>
+        </div>
+    </section>
+
+    <!-- ===================== TALENT QUIZ ===================== -->
+    <section class="screen" id="screen-quiz">
+        <div class="topbar">
+            <div class="eyebrow" style="margin:0;">Descoberta de talentos</div>
+            <div></div>
+        </div>
+        <div class="wrap">
+            <div class="quiz-card" id="quizCard"></div>
+        </div>
+    </section>
+
+    <!-- ===================== VOCATIONAL TEST ===================== -->
+    <section class="screen" id="screen-vocacional">
+        <div class="topbar">
+            <div class="eyebrow" style="margin:0;">Teste vocacional</div>
+            <button class="profile-chip" onclick="goTo(state.dream ? 'dashboard' : 'hero')"><span
+                    class="em">←</span><span class="lbl">Voltar</span></button>
+        </div>
+        <div class="wrap">
+            <div class="quiz-card" id="vocCard"></div>
+        </div>
+    </section>
+
+    <!-- ===================== ENEM STUDY ===================== -->
+    <section class="screen" id="screen-enem">
+        <div class="topbar">
+            <div class="eyebrow" style="margin:0;">Estudar para o ENEM</div>
+            <button class="profile-chip hide" id="enemProfileChip" onclick="goTo('picker')">
+                <span class="em" id="enemChipEmoji">🎯</span>
+                <span class="lbl">Sonho: <b id="enemChipName">—</b></span>
+            </button>
+        </div>
+        <div class="wrap">
+            <h2 style="font-size:26px; margin-bottom:8px;">Os assuntos que mais caem na prova</h2>
+            <p class="enem-intro">Levantamento dos temas com maior frequência histórica no ENEM, organizados por
+                área. Toque numa matéria pra abrir os assuntos e entender rapidinho o que estudar primeiro.</p>
+
+            <div class="enem-reco hide" id="enemReco">
+                <div class="enem-reco-title">🎯 Baseado no seu sonho de ser <b id="enemRecoDream">—</b>, essas são
+                    as matérias que mais pesam pra sua área</div>
+                <div class="enem-reco-chips" id="enemRecoChips"></div>
+                <div class="enem-reco-footnote">Os pesos exatos variam de faculdade para faculdade, mas essas
+                    costumam ser as matérias mais avaliadas pra quem quer seguir essa área — por isso elas aparecem
+                    primeiro na lista abaixo, com conteúdo mais aprofundado.</div>
+            </div>
+
+            <input type="text" class="enem-search" id="enemSearch"
+                placeholder="Buscar um assunto (ex: genética, funções, guerra fria...)">
+
+            <div class="enem-tabs" id="enemTabs"></div>
+            <div id="enemList"></div>
+            <div class="enem-empty hide" id="enemEmpty">Nenhum assunto encontrado com esse termo.</div>
+        </div>
+    </section>
+
+    <!-- MOBILE BOTTOM NAV -->
+    <nav class="appnav" id="appnav">
+        <button class="navitem active" data-nav="hero"><span class="ic">✦</span>Início</button>
+        <button class="navitem" data-nav="dashboard"><span class="ic">🗺️</span>Futuro</button>
+        <button class="navitem" data-nav="simulator"><span class="ic">🎬</span>Simular</button>
+        <button class="navitem" data-nav="quiz"><span class="ic">🧠</span>Talentos</button>
+        <button class="navitem" data-nav="enem"><span class="ic">📚</span>ENEM</button>
+    </nav>
+
+    <!-- ENGENHARIA VARIANT MODAL -->
+    <div class="eng-modal-overlay" id="engModalOverlay">
+        <div class="eng-modal">
+            <button class="eng-modal-close" id="engModalClose">✕</button>
+            <div class="eyebrow">Escolha sua área</div>
+            <h3 id="engModalTitle" style="font-size:22px; margin-bottom:16px;">Qual engenharia combina com você?</h3>
+            <div class="dream-grid eng-modal-grid" id="engModalGrid"></div>
+        </div>
+    </div>
+
+    <!-- FLOATING STUDY TIMER (CLOUD) -->
+    <div class="timer-cloud mode-foco" id="timerCloud">
+        <span class="timer-cloud-dot"></span>
+        <span class="timer-cloud-time mono" id="cloudTimerDisplay">25:00</span>
+        <div class="timer-cloud-actions">
+            <button class="timer-cloud-btn" id="cloudPauseBtn" title="Pausar">⏸</button>
+            <button class="timer-cloud-btn stop" id="cloudStopBtn" title="Parar">⏹</button>
+        </div>
+    </div>
+
+    <script>
+        /* ---------------- DATA ---------------- */
+        const DREAMS = {
+            medico: {
+                name: 'Médico(a)', emoji: '🩺', tag: 'Cuidar da saúde das pessoas', color: '#D9954F',
+                subjects: [
+                    { mat: 'Biologia', icon: '🧬', ex: 'Entender o corpo humano é a base de todo diagnóstico — cada sistema que você estuda hoje é um paciente que você vai tratar amanhã.' },
+                    { mat: 'Química', icon: '⚗️', ex: 'Reações químicas explicam como remédios agem no organismo e por que certas combinações são perigosas.' },
+                    { mat: 'Matemática', icon: '📐', ex: 'Cálculo de dosagem de medicamentos por peso e idade — um erro de conta pode custar uma vida.' }],
+                have: ['Atenção aos detalhes', 'Empatia', 'Curiosidade científica'],
+                grow: ['Trabalho sob pressão', 'Tomada de decisão rápida', 'Comunicação com pacientes'],
+                day: [
+                    { t: '07h00', a: 'Revisão de exames dos pacientes internados', tag: 'Biologia + Interpretação de dados' },
+                    { t: '09h30', a: 'Consulta e cálculo da dose certa de um medicamento', tag: 'Matemática aplicada' },
+                    { t: '13h00', a: 'Explicar um diagnóstico difícil para uma família', tag: 'Comunicação' },
+                    { t: '16h00', a: 'Discussão de caso com outros médicos', tag: 'Trabalho em equipe' }],
+                talent: 'lógica'
+            },
+            direito: {
+                name: 'Advogado(a)', emoji: '⚖️', tag: 'Defender direitos e interpretar as leis', color: '#D9954F',
+                subjects: [
+                    { mat: 'Português', icon: '✍️', ex: 'Interpretar contratos, leis e petições exige domínio total da língua — uma vírgula fora do lugar pode mudar o sentido de uma lei.' },
+                    { mat: 'Filosofia', icon: '🤔', ex: 'Conceitos de justiça, ética e direitos fundamentam praticamente todo argumento jurídico que você vai construir.' },
+                    { mat: 'História', icon: '🏛️', ex: 'Entender como as leis e a Constituição foram criadas ajuda a interpretar por que elas existem da forma que existem hoje.' }],
+                have: ['Argumentação', 'Leitura crítica', 'Senso de justiça'],
+                grow: ['Oratória', 'Organização de processos', 'Negociação'],
+                day: [
+                    { t: '08h00', a: 'Leitura de um processo e levantamento de provas', tag: 'Leitura crítica' },
+                    { t: '10h30', a: 'Redação de uma petição com argumentos jurídicos', tag: 'Português + Argumentação' },
+                    { t: '14h00', a: 'Audiência representando um cliente', tag: 'Oratória' },
+                    { t: '16h30', a: 'Reunião para negociar um acordo entre as partes', tag: 'Negociação' }],
+                talent: 'escrita'
+            },
+            enfermagem: {
+                name: 'Enfermeiro(a)', emoji: '💉', tag: 'Cuidar diretamente da saúde e do bem-estar dos pacientes', color: '#3FBFA0',
+                subjects: [
+                    { mat: 'Biologia', icon: '🧬', ex: 'Entender o funcionamento do corpo humano é essencial pra identificar e cuidar de qualquer paciente.' },
+                    { mat: 'Química', icon: '⚗️', ex: 'Calcular e administrar a dose certa de um medicamento depende de entender como as substâncias agem no corpo.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Explicar um cuidado com calma pra um paciente ansioso é tão importante quanto saber aplicá-lo.' }],
+                have: ['Empatia', 'Atenção aos detalhes', 'Trabalho sob pressão'],
+                grow: ['Trabalho em equipe multidisciplinar', 'Gestão do tempo', 'Comunicação em momentos delicados'],
+                day: [
+                    { t: '07h00', a: 'Verificação de sinais vitais dos pacientes internados', tag: 'Biologia aplicada' },
+                    { t: '09h30', a: 'Cálculo e administração da dose de um medicamento', tag: 'Química + Matemática' },
+                    { t: '13h00', a: 'Apoio a um paciente e à família em um momento difícil', tag: 'Comunicação' },
+                    { t: '16h00', a: 'Passagem de plantão para a próxima equipe', tag: 'Trabalho em equipe' }],
+                talent: 'resolucao'
+            },
+            psicologia: {
+                name: 'Psicólogo(a)', emoji: '🧠', tag: 'Entender a mente e ajudar pessoas a lidar com suas emoções', color: '#8F7FE0',
+                subjects: [
+                    { mat: 'Biologia', icon: '🧬', ex: 'Entender como o cérebro e o sistema nervoso funcionam ajuda a compreender emoções, memória e comportamento.' },
+                    { mat: 'Filosofia', icon: '💭', ex: 'Perguntas sobre identidade, consciência e ética atravessam praticamente toda teoria psicológica.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Uma escuta atenta começa com entender bem o que a pessoa está realmente dizendo — nas palavras e nos silêncios.' }],
+                have: ['Escuta ativa', 'Empatia', 'Observação'],
+                grow: ['Fundamentação teórica', 'Ética profissional', 'Gestão da própria carga emocional'],
+                day: [
+                    { t: '09h00', a: 'Sessão de atendimento com um paciente', tag: 'Escuta ativa' },
+                    { t: '10h30', a: 'Registro de anotações do caso', tag: 'Português aplicado' },
+                    { t: '14h00', a: 'Estudo de uma abordagem teórica pra um caso complexo', tag: 'Filosofia + Teoria' },
+                    { t: '16h00', a: 'Supervisão com outros profissionais da área', tag: 'Trabalho em equipe' }],
+                talent: 'escrita'
+            },
+            administracao: {
+                name: 'Administrador(a)', emoji: '📊', tag: 'Planejar e gerir os recursos de uma empresa', color: '#3FBFA0',
+                subjects: [
+                    { mat: 'Matemática', icon: '📐', ex: 'Análise de custos, lucro e indicadores financeiros é o dia a dia de quem decide os rumos de uma empresa.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Relatórios, apresentações e negociações dependem de saber comunicar uma ideia com clareza.' },
+                    { mat: 'Geografia', icon: '🌍', ex: 'Entender mercados e economia de diferentes regiões ajuda a decidir onde e como uma empresa deve crescer.' }],
+                have: ['Organização', 'Visão estratégica', 'Facilidade com números'],
+                grow: ['Liderança de equipe', 'Tomada de decisão sob incerteza', 'Negociação'],
+                day: [
+                    { t: '08h30', a: 'Análise dos indicadores financeiros do mês', tag: 'Matemática aplicada' },
+                    { t: '10h30', a: 'Reunião de planejamento com a equipe', tag: 'Liderança' },
+                    { t: '14h00', a: 'Apresentação de resultados para a diretoria', tag: 'Comunicação' },
+                    { t: '16h30', a: 'Negociação com um fornecedor', tag: 'Negociação' }],
+                talent: 'lideranca'
+            },
+            pedagogia: {
+                name: 'Pedagogo(a)', emoji: '📚', tag: 'Ensinar e formar as próximas gerações', color: '#D9954F',
+                subjects: [
+                    { mat: 'Português', icon: '✍️', ex: 'Explicar um conteúdo difícil de um jeito simples é uma das habilidades mais importantes de quem ensina.' },
+                    { mat: 'Filosofia', icon: '💭', ex: 'Teorias sobre como as pessoas aprendem guiam praticamente todo planejamento de aula.' },
+                    { mat: 'Matemática', icon: '📐', ex: 'Ensinar bem qualquer conteúdo exige entender a lógica por trás dele antes de simplificar pros alunos.' }],
+                have: ['Paciência', 'Didática', 'Comunicação clara'],
+                grow: ['Gestão de sala de aula', 'Adaptação de conteúdo pra diferentes alunos', 'Uso de tecnologia no ensino'],
+                day: [
+                    { t: '07h30', a: 'Planejamento da aula do dia', tag: 'Organização' },
+                    { t: '08h30', a: 'Explicação de um conteúdo novo pra turma', tag: 'Didática' },
+                    { t: '13h30', a: 'Apoio individual a um aluno com dificuldade', tag: 'Paciência' },
+                    { t: '16h00', a: 'Reunião com a coordenação sobre o desempenho da turma', tag: 'Comunicação' }],
+                talent: 'escrita'
+            },
+            odontologia: {
+                name: 'Dentista', emoji: '🦷', tag: 'Cuidar da saúde bucal e do sorriso das pessoas', color: '#8F7FE0',
+                subjects: [
+                    { mat: 'Biologia', icon: '🧬', ex: 'Anatomia da boca, dos dentes e das gengivas é a base de qualquer diagnóstico e tratamento.' },
+                    { mat: 'Química', icon: '⚗️', ex: 'Materiais restauradores, anestésicos e produtos de higiene bucal dependem de entender reações químicas.' },
+                    { mat: 'Física', icon: '⚙️', ex: 'Força, pressão e precisão guiam procedimentos delicados feitos bem de perto, com instrumentos pequenos.' }],
+                have: ['Habilidade manual', 'Atenção aos detalhes', 'Paciência'],
+                grow: ['Comunicação com pacientes ansiosos', 'Gestão do próprio consultório', 'Atualização constante em novas técnicas'],
+                day: [
+                    { t: '08h00', a: 'Avaliação de uma radiografia antes do procedimento', tag: 'Biologia aplicada' },
+                    { t: '09h30', a: 'Procedimento de restauração em um paciente', tag: 'Habilidade manual' },
+                    { t: '13h00', a: 'Explicação tranquila de um tratamento pra um paciente ansioso', tag: 'Comunicação' },
+                    { t: '16h00', a: 'Organização da agenda e dos materiais do consultório', tag: 'Organização' }],
+                talent: 'resolucao'
+            },
+            designer: {
+                name: 'Designer', emoji: '🎨', tag: 'Criar experiências e soluções visuais', color: '#8F7FE0',
+                subjects: [
+                    { mat: 'Matemática', icon: '📐', ex: 'Proporção, grid e espaçamento — todo layout bonito nasce de uma lógica matemática por trás.' },
+                    { mat: 'História', icon: '🏛️', ex: 'Estudar a evolução das tendências visuais e da moda te dá repertório para criar algo novo.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Todo design comunica uma mensagem — escrever bem ajuda a pensar em como as pessoas vão entender seu trabalho.' }],
+                have: ['Criatividade', 'Senso estético', 'Observação'],
+                grow: ['Justificar decisões com dados', 'Trabalhar com prazos', 'Apresentar ideias'],
+                day: [
+                    { t: '08h30', a: 'Pesquisa de referências e tendências', tag: 'História + Cultura' },
+                    { t: '10h00', a: 'Criação do layout no grid do projeto', tag: 'Matemática aplicada' },
+                    { t: '14h00', a: 'Apresentação da ideia para o cliente', tag: 'Comunicação' },
+                    { t: '16h30', a: 'Ajustes com base no feedback do time', tag: 'Colaboração' }],
+                talent: 'criatividade'
+            },
+            engenheiro: {
+                name: 'Engenheiro(a)', emoji: '🏗️', tag: 'Escolha sua área da engenharia', color: '#D9954F',
+                isHub: true,
+                variantIds: ['eng_civil', 'eng_mecanica', 'eng_eletrica', 'eng_computacao', 'eng_quimica', 'eng_producao', 'eng_ambiental']
+            },
+            eng_civil: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) Civil', emoji: '🏗️', tag: 'Projetar e construir estruturas e edificações', color: '#D9954F',
+                subjects: [
+                    { mat: 'Matemática', icon: '📐', ex: 'Cálculos estruturais garantem que uma ponte ou prédio aguente o peso para o qual foi projetado.' },
+                    { mat: 'Física', icon: '⚙️', ex: 'Forças, resistência dos materiais e energia explicam por que uma construção fica de pé.' },
+                    { mat: 'Geografia', icon: '🗺️', ex: 'Entender o terreno e o clima de um lugar é essencial antes de qualquer projeto.' }],
+                have: ['Raciocínio lógico', 'Organização', 'Visão espacial'],
+                grow: ['Gestão de projetos', 'Trabalho com normas técnicas', 'Liderança de equipe'],
+                day: [
+                    { t: '08h00', a: 'Cálculo de carga estrutural de um projeto', tag: 'Matemática + Física' },
+                    { t: '11h00', a: 'Visita técnica ao terreno da obra', tag: 'Geografia aplicada' },
+                    { t: '14h00', a: 'Reunião com a equipe de construção', tag: 'Liderança' },
+                    { t: '17h00', a: 'Ajuste do projeto com base em normas', tag: 'Atenção a detalhes' }],
+                talent: 'resolucao'
+            },
+            eng_mecanica: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) Mecânico(a)', emoji: '⚙️', tag: 'Projetar máquinas, motores e sistemas mecânicos', color: '#D9954F',
+                subjects: [
+                    { mat: 'Física', icon: '⚙️', ex: 'Entender forças, energia e movimento é a base para projetar qualquer máquina.' },
+                    { mat: 'Matemática', icon: '📐', ex: 'Cálculo diferencial descreve como as peças se movem e resistem a esforços no dia a dia.' },
+                    { mat: 'Química', icon: '⚗️', ex: 'Escolher o material certo pra uma peça depende de entender suas propriedades químicas.' }],
+                have: ['Curiosidade por como as coisas funcionam', 'Raciocínio lógico', 'Habilidade manual'],
+                grow: ['Modelagem em softwares CAD', 'Gestão de projetos', 'Trabalho em equipe multidisciplinar'],
+                day: [
+                    { t: '08h00', a: 'Simulação de esforços em uma peça', tag: 'Física aplicada' },
+                    { t: '10h30', a: 'Desenho técnico de um componente', tag: 'Matemática + Geometria' },
+                    { t: '13h30', a: 'Teste de protótipo em bancada', tag: 'Resolução de problemas' },
+                    { t: '16h00', a: 'Reunião com a equipe de produção', tag: 'Trabalho em equipe' }],
+                talent: 'logica'
+            },
+            eng_eletrica: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) Eletricista', emoji: '🔌', tag: 'Projetar sistemas de energia e circuitos elétricos', color: '#D9954F',
+                subjects: [
+                    { mat: 'Física', icon: '⚡', ex: 'Leis de circuitos, corrente e tensão são a base de tudo que você vai projetar.' },
+                    { mat: 'Matemática', icon: '📐', ex: 'Equações descrevem como a corrente e a tensão se comportam num circuito ao longo do tempo.' },
+                    { mat: 'Química', icon: '⚗️', ex: 'Entender materiais condutores e baterias depende de conceitos básicos de química.' }],
+                have: ['Raciocínio lógico', 'Atenção a detalhes', 'Interesse por tecnologia'],
+                grow: ['Normas de segurança elétrica', 'Gestão de projetos', 'Programação de sistemas de controle'],
+                day: [
+                    { t: '08h00', a: 'Cálculo de dimensionamento de um circuito', tag: 'Física + Matemática' },
+                    { t: '11h00', a: 'Teste de um painel elétrico', tag: 'Atenção a detalhes' },
+                    { t: '14h00', a: 'Leitura de diagramas e normas técnicas', tag: 'Interpretação técnica' },
+                    { t: '16h30', a: 'Reunião sobre eficiência energética de um projeto', tag: 'Sustentabilidade' }],
+                talent: 'logica'
+            },
+            eng_computacao: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) de Computação', emoji: '💻', tag: 'Projetar sistemas, software e soluções digitais', color: '#D9954F',
+                subjects: [
+                    { mat: 'Matemática', icon: '📐', ex: 'Lógica matemática e algoritmos são a espinha dorsal de qualquer programa ou sistema.' },
+                    { mat: 'Física', icon: '⚙️', ex: 'Entender como o hardware funciona por dentro ajuda a criar software mais eficiente.' },
+                    { mat: 'Inglês', icon: '🌎', ex: 'Documentação técnica, fóruns e a maior parte das ferramentas de programação são em inglês.' }],
+                have: ['Pensamento lógico', 'Paciência para resolver problemas', 'Curiosidade'],
+                grow: ['Trabalho em equipe (metodologias ágeis)', 'Comunicação técnica', 'Aprendizado contínuo de novas tecnologias'],
+                day: [
+                    { t: '09h00', a: 'Planejamento das tarefas do dia', tag: 'Lógica' },
+                    { t: '10h30', a: 'Escrita e teste de código', tag: 'Matemática aplicada' },
+                    { t: '14h00', a: 'Revisão de código com o time', tag: 'Trabalho em equipe' },
+                    { t: '16h00', a: 'Leitura de documentação técnica em inglês', tag: 'Inglês' }],
+                talent: 'logica'
+            },
+            eng_quimica: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) Químico(a)', emoji: '🧪', tag: 'Projetar processos industriais e transformar materiais', color: '#D9954F',
+                subjects: [
+                    { mat: 'Química', icon: '⚗️', ex: 'Toda produção industrial, de remédios a plásticos, depende de entender reações em larga escala.' },
+                    { mat: 'Matemática', icon: '📐', ex: 'Cálculos de balanço de massa garantem que um processo industrial funcione sem desperdício.' },
+                    { mat: 'Física', icon: '🌡️', ex: 'Entender calor e energia é essencial para projetar reatores e processos industriais.' }],
+                have: ['Raciocínio analítico', 'Atenção a detalhes', 'Curiosidade científica'],
+                grow: ['Segurança industrial', 'Gestão de processos', 'Sustentabilidade na produção'],
+                day: [
+                    { t: '08h00', a: 'Análise de amostras em laboratório', tag: 'Química aplicada' },
+                    { t: '10h30', a: 'Cálculo de balanço de massa de um processo', tag: 'Matemática aplicada' },
+                    { t: '13h30', a: 'Inspeção de uma planta industrial', tag: 'Atenção a detalhes' },
+                    { t: '16h00', a: 'Reunião sobre otimização de produção', tag: 'Resolução de problemas' }],
+                talent: 'resolucao'
+            },
+            eng_producao: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) de Produção', emoji: '📦', tag: 'Otimizar processos, tempo e recursos de uma produção', color: '#D9954F',
+                subjects: [
+                    { mat: 'Matemática', icon: '📊', ex: 'Estatística ajuda a identificar onde um processo de produção está perdendo tempo ou dinheiro.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Coordenar equipes e apresentar resultados pra diretoria exige comunicação clara.' },
+                    { mat: 'Geografia', icon: '🌍', ex: 'Entender rotas, distribuição e cadeia de suprimentos conecta direto com geografia econômica.' }],
+                have: ['Organização', 'Visão de processo', 'Facilidade com números'],
+                grow: ['Liderança de equipe', 'Gestão de projetos', 'Negociação com fornecedores'],
+                day: [
+                    { t: '08h00', a: 'Análise de indicadores de produção', tag: 'Estatística' },
+                    { t: '10h30', a: 'Reunião para otimizar uma linha de produção', tag: 'Resolução de problemas' },
+                    { t: '13h30', a: 'Contato com fornecedores sobre prazos', tag: 'Negociação' },
+                    { t: '16h00', a: 'Apresentação de resultados para a diretoria', tag: 'Comunicação' }],
+                talent: 'lideranca'
+            },
+            eng_ambiental: {
+                hidden: true, parentHub: 'engenheiro',
+                name: 'Engenheiro(a) Ambiental', emoji: '🌱', tag: 'Criar soluções sustentáveis para problemas ambientais', color: '#D9954F',
+                subjects: [
+                    { mat: 'Biologia', icon: '🧬', ex: 'Entender como os ecossistemas funcionam é essencial pra avaliar o impacto de qualquer projeto.' },
+                    { mat: 'Química', icon: '⚗️', ex: 'Tratamento de água e de resíduos depende de entender reações e processos químicos.' },
+                    { mat: 'Geografia', icon: '🗺️', ex: 'Avaliar impactos ambientais exige entender o território e o clima de uma região.' }],
+                have: ['Consciência ambiental', 'Curiosidade científica', 'Pensamento sistêmico'],
+                grow: ['Legislação ambiental', 'Gestão de projetos', 'Comunicação com comunidades afetadas'],
+                day: [
+                    { t: '08h00', a: 'Coleta e análise de amostras de água', tag: 'Química aplicada' },
+                    { t: '10h30', a: 'Avaliação de impacto ambiental de um projeto', tag: 'Biologia + Geografia' },
+                    { t: '13h30', a: 'Reunião sobre soluções de tratamento de resíduos', tag: 'Resolução de problemas' },
+                    { t: '16h00', a: 'Visita a uma comunidade afetada por um projeto', tag: 'Comunicação' }],
+                talent: 'resolucao'
+            },
+            fotografo: {
+                name: 'Fotógrafo(a)', emoji: '📷', tag: 'Contar histórias através de imagens', color: '#8F7FE0',
+                subjects: [
+                    { mat: 'Física', icon: '💡', ex: 'Luz, ótica e sensores de câmera — entender física é entender como a imagem se forma.' },
+                    { mat: 'Artes', icon: '🖼️', ex: 'Composição, cor e enquadramento vêm direto do que se estuda em história da arte.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Toda boa foto conta uma história — pensar em narrativa ajuda a criar imagens com significado.' }],
+                have: ['Olhar criativo', 'Paciência', 'Sensibilidade visual'],
+                grow: ['Edição técnica', 'Negociação com clientes', 'Gestão do próprio negócio'],
+                day: [
+                    { t: '07h00', a: 'Ajuste de luz e equipamento para o ensaio', tag: 'Física aplicada' },
+                    { t: '09h00', a: 'Sessão de fotos e direção de cena', tag: 'Comunicação + Arte' },
+                    { t: '14h00', a: 'Edição e seleção das melhores imagens', tag: 'Atenção a detalhes' },
+                    { t: '17h00', a: 'Entrega e conversa com o cliente', tag: 'Negociação' }],
+                talent: 'criatividade'
+            },
+            empresario: {
+                name: 'Empresário(a)', emoji: '💼', tag: 'Criar e liderar um negócio próprio', color: '#3FBFA0',
+                subjects: [
+                    { mat: 'Matemática', icon: '📊', ex: 'Lucro, porcentagem e investimento — a base de qualquer negócio que se sustenta no tempo.' },
+                    { mat: 'Português', icon: '✍️', ex: 'Vender uma ideia bem, para clientes ou investidores, começa com saber se comunicar.' },
+                    { mat: 'Geografia', icon: '🌍', ex: 'Entender mercados e economia de diferentes regiões ajuda a decidir onde e como crescer.' }],
+                have: ['Iniciativa', 'Visão de oportunidade', 'Persistência'],
+                grow: ['Gestão financeira', 'Liderança de equipe', 'Tomada de risco calculado'],
+                day: [
+                    { t: '08h00', a: 'Análise de lucro e despesas do mês', tag: 'Matemática aplicada' },
+                    { t: '10h30', a: 'Reunião com fornecedores', tag: 'Negociação' },
+                    { t: '13h00', a: 'Apresentação do negócio para investidores', tag: 'Comunicação' },
+                    { t: '16h00', a: 'Planejamento de expansão para nova cidade', tag: 'Geografia + Estratégia' }],
+                talent: 'lideranca'
+            }
+        };
+
+        const TALENTS = {
+            criatividade: { name: 'Criatividade', emoji: '✨', desc: 'Você enxerga soluções e possibilidades onde outros veem só o comum. Áreas como design, artes, marketing e arquitetura combinam muito com você.' },
+            lideranca: { name: 'Liderança', emoji: '🧭', desc: 'Você naturalmente organiza pessoas e puxa o grupo para frente. Gestão, empreendedorismo e coordenação de projetos são caminhos fortes.' },
+            logica: { name: 'Lógica', emoji: '🧩', desc: 'Você pensa em passos, padrões e estruturas. Exatas, programação, engenharia e ciências combinam com esse seu jeito de raciocinar.' },
+            escrita: { name: 'Escrita e comunicação', emoji: '🖋️', desc: 'Você tem facilidade para colocar ideias em palavras e se conectar com as pessoas. Jornalismo, direito, marketing e educação podem ser ótimos caminhos.' },
+            resolucao: { name: 'Resolução de problemas', emoji: '🛠️', desc: 'Você gosta de entender como as coisas funcionam e consertar o que está quebrado. Engenharia, tecnologia e ciências aplicadas combinam com você.' }
+        };
+
+        const QUIZ = [
+            {
+                q: 'Um projeto em grupo trava no meio do caminho. O que você faz primeiro?',
+                opts: [{ t: 'Organizo quem faz o quê e defino um novo prazo', k: 'lideranca' }, { t: 'Penso em uma ideia diferente pra resolver', k: 'criatividade' }, { t: 'Listo o que deu errado, passo a passo', k: 'logica' }, { t: 'Converso com o grupo pra entender o que houve', k: 'escrita' }]
+            },
+            {
+                q: 'No tempo livre, você prefere...',
+                opts: [{ t: 'Desenhar, criar algo ou montar um projeto pessoal', k: 'criatividade' }, { t: 'Resolver quebra-cabeças ou jogos de estratégia', k: 'logica' }, { t: 'Ler, escrever ou assistir a debates', k: 'escrita' }, { t: 'Consertar ou desmontar algo pra entender como funciona', k: 'resolucao' }]
+            },
+            {
+                q: 'Um amigo te procura com um problema. Você...',
+                opts: [{ t: 'Escuta com calma e ajuda a colocar em palavras', k: 'escrita' }, { t: 'Já pensa em 3 soluções práticas', k: 'resolucao' }, { t: 'Pergunta os fatos e organiza a situação', k: 'logica' }, { t: 'Assume a frente e propõe um plano de ação', k: 'lideranca' }]
+            },
+            {
+                q: 'Numa apresentação em grupo, você geralmente...',
+                opts: [{ t: 'Cuida da parte visual, dos slides e da estética', k: 'criatividade' }, { t: 'Fica com a fala, porque se comunica bem', k: 'escrita' }, { t: 'Organiza o roteiro e distribui as tarefas', k: 'lideranca' }, { t: 'Checa se os dados e argumentos fazem sentido', k: 'logica' }]
+            },
+            {
+                q: 'Você se sente mais orgulhoso(a) quando...',
+                opts: [{ t: 'Cria algo do zero que ninguém tinha pensado', k: 'criatividade' }, { t: 'Consegue que o grupo trabalhe bem junto', k: 'lideranca' }, { t: 'Encontra a solução exata pra um problema difícil', k: 'resolucao' }, { t: 'Explica algo complicado de um jeito simples', k: 'escrita' }]
+            }
+        ];
+
+        /* ---------------- VOCATIONAL TEST (recomendação de curso) ---------------- */
+        // Cada curso pertence a uma "área" — usado pra cruzar com o talento already computado acima
+        const DREAM_AXIS = {
+            medico: 'saude', enfermagem: 'saude', odontologia: 'saude',
+            direito: 'humanas', pedagogia: 'humanas', psicologia: 'humanas',
+            eng_civil: 'exatas', eng_mecanica: 'exatas', eng_eletrica: 'exatas', eng_computacao: 'exatas', eng_quimica: 'exatas', eng_ambiental: 'exatas',
+            administracao: 'negocios', empresario: 'negocios', eng_producao: 'negocios',
+            designer: 'criativo', fotografo: 'criativo'
+        };
+
+        const VOC_QUIZ = [
+            {
+                q: 'Numa emergência ou imprevisto no meio da rua, o que mais te puxa pra ajudar?',
+                opts: [
+                    { t: 'Cuidar de quem está machucado ou passando mal', axis: 'saude', k: 'resolucao' },
+                    { t: 'Organizar rapidamente quem faz o quê', axis: 'negocios', k: 'lideranca' },
+                    { t: 'Entender a causa do problema com calma e lógica', axis: 'exatas', k: 'logica' },
+                    { t: 'Conversar com todos pra entender e explicar o que houve', axis: 'humanas', k: 'escrita' }
+                ]
+            },
+            {
+                q: 'Num fim de semana livre, você prefere...',
+                opts: [
+                    { t: 'Fazer um trabalho voluntário ou cuidar de alguém da família', axis: 'saude', k: 'resolucao' },
+                    { t: 'Montar, consertar ou desmontar algo pra entender como funciona', axis: 'exatas', k: 'logica' },
+                    { t: 'Criar um desenho, foto, vídeo ou projeto visual', axis: 'criativo', k: 'criatividade' },
+                    { t: 'Planejar um evento, uma venda ou um negócio com amigos', axis: 'negocios', k: 'lideranca' }
+                ]
+            },
+            {
+                q: 'Numa discussão em grupo sobre um tema polêmico, você...',
+                opts: [
+                    { t: 'Busca argumentos bem embasados pra defender um lado', axis: 'humanas', k: 'escrita' },
+                    { t: 'Puxa a conversa pra dados e números concretos', axis: 'exatas', k: 'logica' },
+                    { t: 'Sugere uma solução criativa que ninguém tinha pensado', axis: 'criativo', k: 'criatividade' },
+                    { t: 'Tenta acalmar os ânimos e fazer todo mundo se ouvir', axis: 'saude', k: 'resolucao' }
+                ]
+            },
+            {
+                q: 'Que tipo de matéria da escola te dá mais satisfação de aprender?',
+                opts: [
+                    { t: 'Biologia e Química — entender o corpo e a natureza', axis: 'saude', k: 'logica' },
+                    { t: 'Matemática e Física — resolver problemas exatos', axis: 'exatas', k: 'logica' },
+                    { t: 'Português, Filosofia e História — interpretar textos e ideias', axis: 'humanas', k: 'escrita' },
+                    { t: 'Artes e Geografia — pensar em espaço, estética e cultura', axis: 'criativo', k: 'criatividade' }
+                ]
+            },
+            {
+                q: 'Um amigo te procura com um problema financeiro. Você...',
+                opts: [
+                    { t: 'Ajuda a montar um plano com números e prazos', axis: 'negocios', k: 'lideranca' },
+                    { t: 'Escuta a real razão da dificuldade antes de opinar', axis: 'humanas', k: 'escrita' },
+                    { t: 'Sugere um jeito diferente e criativo de ganhar uma renda extra', axis: 'criativo', k: 'criatividade' },
+                    { t: 'Analisa cada opção com calma, testando cenários', axis: 'exatas', k: 'logica' }
+                ]
+            },
+            {
+                q: 'O que mais te incomoda no mundo hoje?',
+                opts: [
+                    { t: 'Pessoas sem acesso a cuidado de saúde', axis: 'saude', k: 'resolucao' },
+                    { t: 'Injustiça e falta de direitos básicos', axis: 'humanas', k: 'escrita' },
+                    { t: 'Falta de tecnologia pra resolver problemas simples', axis: 'exatas', k: 'resolucao' },
+                    { t: 'Negócios que não geram oportunidade pra comunidade', axis: 'negocios', k: 'lideranca' }
+                ]
+            },
+            {
+                q: 'Você imagina seu futuro trabalho como algo...',
+                opts: [
+                    { t: 'Diretamente com pessoas, cuidando da saúde delas', axis: 'saude', k: 'resolucao' },
+                    { t: 'Com números, sistemas e processos técnicos', axis: 'exatas', k: 'logica' },
+                    { t: 'Liderando um time e tomando decisões estratégicas', axis: 'negocios', k: 'lideranca' },
+                    { t: 'Criando coisas visuais do zero', axis: 'criativo', k: 'criatividade' }
+                ]
+            },
+            {
+                q: 'Numa apresentação de trabalho em grupo, o que você prefere fazer?',
+                opts: [
+                    { t: 'Cuidar da parte visual e da estética dos slides', axis: 'criativo', k: 'criatividade' },
+                    { t: 'Falar e defender os argumentos com clareza', axis: 'humanas', k: 'escrita' },
+                    { t: 'Garantir que os números e dados batem certinho', axis: 'exatas', k: 'logica' },
+                    { t: 'Organizar o roteiro e quem fala em qual momento', axis: 'negocios', k: 'lideranca' }
+                ]
+            },
+            {
+                q: 'Se pudesse resolver agora um problema do mundo, você escolheria...',
+                opts: [
+                    { t: 'Curar uma doença', axis: 'saude', k: 'resolucao' },
+                    { t: 'Acabar com uma injustiça social', axis: 'humanas', k: 'escrita' },
+                    { t: 'Criar uma tecnologia que muda a vida das pessoas', axis: 'exatas', k: 'resolucao' },
+                    { t: 'Ajudar pequenos negócios a crescerem', axis: 'negocios', k: 'lideranca' }
+                ]
+            },
+            {
+                q: 'Seus colegas geralmente dizem que você é a pessoa que...',
+                opts: [
+                    { t: 'Cuida bem dos outros e mantém a calma em momentos difíceis', axis: 'saude', k: 'resolucao' },
+                    { t: 'Explica as coisas de um jeito que todo mundo entende', axis: 'humanas', k: 'escrita' },
+                    { t: 'Sempre tem uma solução técnica ou prática pra tudo', axis: 'exatas', k: 'logica' },
+                    { t: 'Puxa o grupo pra frente e organiza todo mundo', axis: 'negocios', k: 'lideranca' }
+                ]
+            }
+        ];
+
+        /* ---------------- ENEM STUDY DATA ---------------- */
+        const ENEM_AREAS = [
+            { id: 'linguagens', name: 'Linguagens', icon: '📖' },
+            { id: 'humanas', name: 'Humanas', icon: '🌍' },
+            { id: 'natureza', name: 'Natureza', icon: '🧪' },
+            { id: 'matematica', name: 'Matemática', icon: '📐' }
+        ];
+
+        const ENEM_SUBJECTS = [
+            {
+                id: 'portugues', area: 'linguagens', name: 'Português / Literatura', icon: '📖',
+                topics: [
+                    { name: 'Interpretação e compreensão de texto', freq: 'alta', desc: 'A maior parte das questões de linguagens depende disso: entender a ideia central, o argumento e a intenção do autor num texto.', explain: 'Interpretar um texto é ir além de entender as palavras soltas: é identificar qual é a ideia principal, o que o autor está defendendo e por que ele escreveu daquele jeito. Para isso, vale sempre perguntar "quem fala, para quem, com qual objetivo e em qual contexto". Preste atenção em palavras-chave que indicam opinião (como "infelizmente", "certamente"), em conectivos que ligam ideias (mas, porém, portanto) e no título, que geralmente já entrega uma pista da tese do texto. Treinar isso é ler bastante e, depois de cada parágrafo, resumir mentalmente "o que esse trecho quis dizer" com suas próprias palavras.' },
+                    { name: 'Gêneros textuais e funções da linguagem', freq: 'alta', desc: 'Reconhecer se um texto é publicitário, jornalístico, literário etc., e qual efeito ele quer causar no leitor.', explain: 'Cada gênero textual (notícia, propaganda, poema, charge, e-mail, bula de remédio) tem uma estrutura e um objetivo próprios, e reconhecer isso ajuda a entender o que o autor quer alcançar. Um anúncio quer convencer você a comprar algo, então usa a função apelativa da linguagem; uma notícia quer informar, priorizando a função referencial; um poema explora a função poética, valorizando sonoridade e imagens. Saber identificar essas pistas — o suporte onde o texto aparece, o vocabulário usado, a quem ele se dirige — é o primeiro passo para interpretar corretamente qualquer questão de linguagens.' },
+                    { name: 'Figuras de linguagem', freq: 'media', desc: 'Metáfora, ironia, hipérbole e outras — muito usadas em tirinhas, poemas e anúncios nas questões.', explain: 'Figuras de linguagem são recursos que fogem do sentido literal das palavras para criar um efeito de sentido especial. A metáfora compara duas coisas sem usar "como" (ex: "seu sorriso é um sol"); a hipérbole exagera de propósito ("chorei rios de lágrimas"); a ironia diz o oposto do que quer dizer, geralmente com tom crítico; a personificação dá características humanas a objetos ou animais. Reconhecer essas figuras é essencial porque muitas questões pedem justamente para explicar "o que o autor quis dizer de verdade" além do sentido literal do texto.' },
+                    { name: 'Coesão e coerência textual', freq: 'media', desc: 'Como as ideias de um texto se conectam — cai bastante em questões sobre reescrita de frases e trechos.', explain: 'Coesão é a "cola" que liga as frases e parágrafos de um texto — feita por conectivos (mas, porque, portanto), pronomes e repetições estratégicas de palavras. Coerência é o sentido geral do texto fazer sentido como um todo, sem contradições internas. Um texto pode ter frases gramaticalmente perfeitas e mesmo assim ser incoerente, se as ideias não se encaixarem logicamente. Nas provas, esse conteúdo aparece quando pedem para você identificar o conectivo certo para substituir outro, ou para apontar por que um trecho ficou confuso ou contraditório.' },
+                    { name: 'Modernismo e literatura brasileira', freq: 'alta', desc: 'De todas as escolas literárias, o Modernismo (1ª, 2ª e 3ª fases) é a mais recorrente na prova.', explain: 'O Modernismo brasileiro (a partir da Semana de Arte Moderna de 1922) rompeu com os padrões europeus e passou a valorizar a linguagem coloquial, os temas nacionais e a experimentação formal. A 1ª fase (até 1930) é mais radical e de ruptura, com autores como Mário e Oswald de Andrade; a 2ª fase (1930-1945) aprofunda a crítica social, com Graciliano Ramos e Carlos Drummond de Andrade; a 3ª fase (pós-1945) inclui a prosa urbana e experimental, como Guimarães Rosa e Clarice Lispector. Entender o contexto histórico de cada fase (industrialização, ditadura Vargas, urbanização) ajuda a interpretar por que cada autor escrevia do jeito que escrevia.' },
+                    { name: 'Variação linguística', freq: 'media', desc: 'Diferenças entre norma padrão, gírias e regionalismos — e por que nenhuma variedade da língua é "errada".', explain: 'A língua portuguesa muda de acordo com a região, a idade, a classe social e o contexto em que é usada — isso é variação linguística, e é um fenômeno natural, não um "erro". A norma padrão (a gramática "certinha" ensinada na escola) é apenas uma das variedades, usada em situações formais como um exame ou uma entrevista de emprego; gírias, sotaques regionais e a fala do dia a dia são igualmente válidos em seus contextos. Nas questões, esse tema costuma pedir para você reconhecer que preconceito linguístico (julgar alguém por como fala) não tem base científica, já que toda variedade segue suas próprias regras.' }
+                ]
+            },
+            {
+                id: 'redacao', area: 'linguagens', name: 'Redação', icon: '✍️',
+                topics: [
+                    { name: 'Estrutura dissertativo-argumentativa', freq: 'alta', desc: 'Introdução com tese, desenvolvimento com argumentos e conclusão com proposta de intervenção — o esqueleto obrigatório do texto.', explain: 'Esse formato de texto se organiza em três partes fixas: a introdução apresenta o tema e termina com a tese (o ponto de vista que você vai defender); o desenvolvimento (geralmente dois parágrafos) traz um argumento por parágrafo, cada um comprovado com dados, exemplos ou referências; a conclusão retoma a tese e apresenta a proposta de intervenção. Pensar nesse esqueleto antes de escrever evita textos "perdidos" e ajuda a manter o argumento organizado do início ao fim.' },
+                    { name: 'Repertório sociocultural', freq: 'alta', desc: 'Usar dados, fatos históricos, filósofos ou referências culturais para sustentar seu argumento e não repetir só a opinião.', explain: 'Repertório sociocultural é qualquer conhecimento de fora do senso comum que você usa para comprovar um argumento: um dado estatístico, uma lei, um filme, um livro, uma teoria de um pensador, um fato histórico. A diferença entre uma redação boa e uma mediana quase sempre está aqui — não basta dizer "isso é um problema", é preciso mostrar por quê, com uma referência concreta que sustente a ideia. Vale ir construindo um "banco" de repertórios que você domina bem (alguns filósofos, alguns dados sobre educação, saúde, meio ambiente) para usar em temas variados.' },
+                    { name: 'Proposta de intervenção completa', freq: 'alta', desc: 'Precisa ter agente, ação, modo/meio, finalidade e detalhamento — faltar um desses elementos custa pontos.', explain: 'A proposta de intervenção é a solução que você apresenta na conclusão para o problema discutido no texto, e ela precisa ter cinco elementos claros: quem vai fazer (agente, como o Governo Federal ou as escolas), o que vai fazer (ação), como vai fazer (modo/meio), para quê vai fazer (finalidade) e um detalhamento que aprofunde algum desses pontos. Uma proposta vaga como "o governo deveria investir em educação" perde pontos porque não diz como nem por meio de quê; já "o Ministério da Educação, por meio de programas de bolsas de estudo, deveria ampliar o acesso ao ensino técnico, com o objetivo de reduzir a evasão escolar" cobre todos os elementos.' },
+                    { name: 'Coesão entre parágrafos', freq: 'media', desc: 'Conectivos e retomadas de ideia que dão fluidez ao texto e evitam parágrafos "soltos".', explain: 'Um bom texto dissertativo não é uma lista de parágrafos independentes — cada parágrafo precisa se conectar com o anterior, geralmente retomando uma palavra-chave ou usando conectivos como "além disso", "nesse sentido", "por outro lado". Isso cria uma sensação de continuidade e mostra que o seu raciocínio está sendo construído aos poucos, e não apenas "colado". Ler o texto em voz alta ao final da escrita ajuda a perceber se as transições entre os parágrafos soam naturais ou se ficaram bruscas.' }
+                ]
+            },
+            {
+                id: 'historia', area: 'humanas', name: 'História', icon: '🏛️',
+                topics: [
+                    { name: 'Brasil República e Ditadura Militar', freq: 'alta', desc: 'Golpe de 1964, censura, resistência e redemocratização — um dos temas mais cobrados de história do Brasil.', explain: 'Em 1964, um golpe militar derrubou o presidente João Goulart e instaurou um regime autoritário que durou até 1985, marcado por censura à imprensa, perseguição a opositores e forte controle do Estado sobre a sociedade. Ao mesmo tempo, houve resistência: estudantes, artistas e movimentos sociais se organizaram contra o regime, muitas vezes na clandestinidade. O processo de redemocratização foi gradual, culminando nas eleições diretas (Diretas Já) e na Constituição de 1988, que é a base do Brasil democrático atual — entender essa transição ajuda a compreender como funcionam hoje os direitos civis e políticos garantidos por lei.' },
+                    { name: 'Segunda Guerra Mundial e Guerra Fria', freq: 'alta', desc: 'Causas, consequências e a disputa entre EUA e URSS que moldou o mundo até hoje.', explain: 'A Segunda Guerra Mundial (1939-1945) nasceu de tensões deixadas pela Primeira Guerra, do avanço de regimes totalitários (nazismo e fascismo) e de disputas territoriais, terminando com a derrota do Eixo e cerca de 70 milhões de mortos. Logo depois, o mundo se dividiu entre dois blocos rivais: os Estados Unidos (capitalismo) e a União Soviética (socialismo), numa disputa chamada Guerra Fria, que não teve confronto direto entre as potências mas gerou conflitos indiretos (como as guerras da Coreia e do Vietnã) e uma corrida armamentista e espacial. Esse período moldou fronteiras, alianças (como a OTAN) e tensões geopolíticas que ainda influenciam o mundo hoje.' },
+                    { name: 'Escravidão e movimentos sociais no Brasil', freq: 'alta', desc: 'Da escravidão à abolição e às lutas por igualdade racial que continuam até o presente.', explain: 'O Brasil foi o país que mais recebeu pessoas escravizadas da África e o último do continente americano a abolir a escravidão, em 1888, depois de séculos de exploração e de resistência (como os quilombos, entre eles o famoso Quilombo dos Palmares). A abolição não veio acompanhada de políticas de inclusão para a população negra recém-liberta, o que ajuda a explicar desigualdades sociais e raciais que persistem até hoje. Entender esse processo histórico é essencial para compreender debates atuais sobre racismo estrutural, ações afirmativas e políticas de reparação, temas frequentes tanto em história quanto na redação.' },
+                    { name: 'Revolução Industrial', freq: 'media', desc: 'Como as máquinas transformaram o trabalho e criaram a sociedade urbana e capitalista moderna.', explain: 'A partir do fim do século XVIII, a invenção de máquinas movidas a vapor na Inglaterra permitiu produzir em fábricas o que antes era feito manualmente, dando início à Revolução Industrial. Isso provocou um êxodo rural gigantesco (pessoas saindo do campo para trabalhar nas cidades), criou a classe operária e consolidou o capitalismo como sistema econômico dominante, com donos de fábricas de um lado e trabalhadores assalariados do outro. As péssimas condições de trabalho da época (jornadas longas, uso de mão de obra infantil) também deram origem aos primeiros movimentos sindicais e às ideias socialistas, temas que se conectam diretamente com sociologia.' },
+                    { name: 'Formação do território e povo brasileiro', freq: 'media', desc: 'Colonização, imigração e a construção da identidade nacional brasileira.', explain: 'O Brasil se formou a partir do encontro (e conflito) entre povos indígenas, colonizadores portugueses e africanos escravizados, e depois recebeu ondas de imigração europeia e asiática a partir do século XIX, especialmente para substituir a mão de obra escrava e povoar o Sul e Sudeste. Cada grupo trouxe línguas, religiões e costumes que se misturaram e formaram a diversidade cultural regional do país — por isso a culinária, a música e os sotaques mudam tanto entre as regiões. Compreender essa formação ajuda a explicar desigualdades regionais e a distribuição da população no território brasileiro até hoje.' }
+                ]
+            },
+            {
+                id: 'geografia', area: 'humanas', name: 'Geografia', icon: '🗺️',
+                topics: [
+                    { name: 'Questões ambientais e sustentabilidade', freq: 'alta', desc: 'Desmatamento, mudanças climáticas e aquecimento global — tema recorrente em quase toda edição da prova.', explain: 'O aquecimento global é causado principalmente pelo aumento de gases de efeito estufa (como CO2 e metano) na atmosfera, liberados por atividades humanas como queima de combustíveis fósseis e desmatamento. Isso já vem causando eventos climáticos mais extremos (secas, enchentes, furacões mais intensos) e ameaça ecossistemas inteiros, como recifes de coral e florestas tropicais. Sustentabilidade é a ideia de suprir as necessidades atuais sem comprometer a capacidade das próximas gerações de suprir as suas — e envolve discussões sobre energia renovável, consumo consciente e acordos internacionais como o Acordo de Paris.' },
+                    { name: 'Geopolítica mundial', freq: 'alta', desc: 'Conflitos internacionais, blocos econômicos e relações de poder entre países.', explain: 'Geopolítica estuda como fatores geográficos (território, recursos naturais, posição estratégica) influenciam as relações de poder entre países. Isso inclui conflitos por território ou recursos (como no Oriente Médio), blocos econômicos que unem países para negociar em conjunto (como a União Europeia ou o Mercosul), e organizações internacionais que tentam mediar conflitos (como a ONU). Entender esse tema ajuda a interpretar notícias internacionais e a perceber por que certos países têm mais influência global do que outros — geralmente ligado a economia, tecnologia militar e controle de recursos estratégicos.' },
+                    { name: 'Urbanização e migrações', freq: 'media', desc: 'Crescimento das cidades, êxodo rural e fluxos migratórios pelo Brasil e pelo mundo.', explain: 'Urbanização é o processo de crescimento das cidades em relação ao campo, impulsionado historicamente pela industrialização, que atraiu trabalhadores rurais em busca de emprego (o chamado êxodo rural). No Brasil, esse processo foi rápido e desorganizado, o que ajuda a explicar problemas como falta de moradia, favelas e sobrecarga de serviços públicos nas grandes cidades. Já as migrações internacionais acontecem por motivos econômicos, políticos (refugiados de guerra) ou ambientais, e mudam a composição demográfica tanto de quem sai quanto de quem recebe os migrantes.' },
+                    { name: 'Agropecuária e uso da terra no Brasil', freq: 'media', desc: 'Estrutura fundiária, agronegócio e os impactos da produção agrícola no território.', explain: 'O Brasil tem uma estrutura fundiária historicamente concentrada, com grandes propriedades (latifúndios) ao lado de pequenas propriedades familiares, o que gera desigualdades no acesso à terra e é debatido em pautas como a reforma agrária. O agronegócio (produção em larga escala, muito mecanizada e voltada à exportação) é uma parte fundamental da economia brasileira, mas também está associado a impactos ambientais como desmatamento para abertura de pastos e plantações. Entender essa dualidade entre agricultura familiar e agronegócio ajuda a interpretar debates sobre uso da terra, meio ambiente e segurança alimentar.' },
+                    { name: 'Globalização e economia', freq: 'media', desc: 'Como o mundo ficou mais conectado economicamente e quais são as desigualdades nesse processo.', explain: 'Globalização é o processo de integração econômica, cultural e tecnológica entre países, intensificado a partir do fim do século XX com a facilidade de transporte, comunicação e comércio internacional. Ela permitiu que produtos, capital e informação circulassem globalmente com mais rapidez, mas também aprofundou desigualdades entre países ricos (que concentram tecnologia e capital) e países em desenvolvimento (que muitas vezes fornecem matéria-prima e mão de obra mais barata). Discutir globalização envolve pensar em cadeias produtivas internacionais, empresas multinacionais e como decisões econômicas tomadas em um país afetam a vida de pessoas do outro lado do mundo.' }
+                ]
+            },
+            {
+                id: 'filosofia-sociologia', area: 'humanas', name: 'Filosofia e Sociologia', icon: '🧠',
+                topics: [
+                    { name: 'Cidadania e direitos humanos', freq: 'alta', desc: 'Conceitos de democracia, direitos civis e igualdade — base de muitas questões interdisciplinares.', explain: 'Cidadania é o conjunto de direitos e deveres que uma pessoa tem dentro de uma sociedade, incluindo direitos civis (liberdade, igualdade perante a lei), políticos (votar e ser votado) e sociais (educação, saúde, moradia). Os direitos humanos são princípios que valem para todo ser humano, independentemente de nacionalidade, e foram formalizados internacionalmente após a Segunda Guerra Mundial, com a Declaração Universal dos Direitos Humanos de 1948, criada justamente em reação às atrocidades cometidas naquele conflito. Esse tema costuma aparecer cruzado com história e atualidades, sempre que se discute desigualdade, discriminação ou avanços e retrocessos em políticas sociais.' },
+                    { name: 'Trabalho e sociedade', freq: 'media', desc: 'Como o trabalho organiza a vida social e as relações de classe desde o capitalismo industrial.', explain: 'Para a sociologia, o trabalho não é só uma forma de ganhar dinheiro — ele organiza boa parte da vida social, define status, identidade e até como as pessoas se relacionam entre si. Com o capitalismo industrial, surgiu uma divisão clara entre quem possui os meios de produção (fábricas, capital) e quem vende sua força de trabalho em troca de salário, uma relação que Karl Marx analisou profundamente e que ainda influencia debates sobre desigualdade social. Hoje, esse tema também inclui discussões sobre automação, trabalho informal e novas formas de emprego, como os aplicativos de entrega.' },
+                    { name: 'Ética e movimentos sociais', freq: 'media', desc: 'Lutas por direitos (feminismo, movimento negro, LGBTQIA+) e os dilemas éticos ligados a elas.', explain: 'Movimentos sociais são organizações coletivas que lutam por mudanças sociais, geralmente contra alguma forma de desigualdade ou discriminação — o feminismo luta pela igualdade de gênero, o movimento negro contra o racismo estrutural, o movimento LGBTQIA+ pelo respeito à diversidade sexual e de gênero. A ética entra nessa discussão ao questionar o que é justo e injusto numa sociedade, e por que certas desigualdades persistem mesmo havendo leis que garantem igualdade formal. Esse tema é um dos mais cobrados em redação, porque costuma pedir uma reflexão sobre como reduzir essas desigualdades na prática.' },
+                    { name: 'Pensadores clássicos', freq: 'media', desc: 'Ideias de contratualistas (Hobbes, Locke, Rousseau) e pensadores sociais que explicam o Estado e a sociedade.', explain: 'Os contratualistas (Hobbes, Locke e Rousseau) desenvolveram teorias sobre por que os seres humanos abrem mão de parte da sua liberdade individual para viver em sociedade sob um Estado. Hobbes acreditava que sem um Estado forte os humanos viveriam em guerra constante; Locke defendia que o Estado deveria proteger direitos naturais como propriedade e liberdade; Rousseau via a desigualdade como um problema criado pela própria sociedade, defendendo a soberania popular. Já pensadores como Marx, Durkheim e Weber, mais tarde, analisaram como a sociedade se organiza em classes, normas coletivas e relações de poder — essas ideias são a base para entender quase qualquer debate sobre política e sociedade nas provas.' }
+                ]
+            },
+            {
+                id: 'biologia', area: 'natureza', name: 'Biologia', icon: '🧬',
+                topics: [
+                    { name: 'Ecologia e impactos ambientais', freq: 'alta', desc: 'Cadeias alimentares, ciclos biogeoquímicos e efeitos humanos nos ecossistemas — um dos temas mais frequentes.', explain: 'Ecologia estuda como os seres vivos se relacionam entre si e com o ambiente, e um dos conceitos centrais é a cadeia alimentar, que mostra como a energia passa de um organismo para outro (produtores, consumidores, decompositores). Os ciclos biogeoquímicos (como o do carbono, da água e do nitrogênio) mostram como elementos essenciais à vida circulam entre seres vivos, solo, água e atmosfera, e atividades humanas como desmatamento e queima de combustíveis fósseis alteram esses ciclos naturais. Entender esse equilíbrio ajuda a explicar por que a destruição de um ecossistema (como o desmatamento de uma floresta) tem efeitos em cadeia que vão muito além do local afetado.' },
+                    { name: 'Genética e hereditariedade', freq: 'alta', desc: 'Leis de Mendel, herança genética e, mais recentemente, biotecnologia e engenharia genética.', explain: 'Gregor Mendel, no século XIX, descobriu por meio de experimentos com ervilhas que características são herdadas dos pais através de "fatores" (hoje chamados genes), que podem ser dominantes ou recessivos — isso é a base da genética clássica. Cada pessoa tem duas cópias de cada gene (uma de cada progenitor), e a combinação delas determina características como cor dos olhos ou tipo sanguíneo, seguindo proporções previsíveis que Mendel calculou. Hoje, a biotecnologia permite manipular diretamente o DNA (engenharia genética), possibilitando desde a produção de insulina em laboratório até terapias gênicas para doenças hereditárias, um assunto cada vez mais presente nas provas.' },
+                    { name: 'Fisiologia humana', freq: 'media', desc: 'Funcionamento dos sistemas do corpo (digestório, imunológico, endócrino) e sua relação com saúde.', explain: 'Fisiologia estuda como os órgãos e sistemas do corpo funcionam e trabalham juntos para manter o organismo vivo e equilibrado. O sistema digestório transforma alimentos em nutrientes que o corpo consegue absorver; o sistema imunológico defende o corpo contra vírus, bactérias e outros agentes invasores; o sistema endócrino usa hormônios para regular funções como crescimento, metabolismo e humor. Entender como esses sistemas se conectam ajuda a interpretar questões sobre doenças, vacinas e hábitos de saúde, temas frequentes tanto em biologia quanto em questões interdisciplinares sobre saúde pública.' },
+                    { name: 'Citologia', freq: 'media', desc: 'Estrutura e função da célula, a base para entender quase todo o resto da biologia.', explain: 'A célula é a menor unidade capaz de realizar todas as funções vitais de um ser vivo, e entender sua estrutura é a base para compreender praticamente todo o resto da biologia. Ela tem uma membrana que controla o que entra e sai, um núcleo que guarda o material genético (nas células eucariontes) e organelas especializadas, como a mitocôndria (que produz energia) e os ribossomos (que produzem proteínas). Processos como respiração celular, divisão celular e síntese de proteínas acontecem dentro dessa estrutura microscópica, e são a base para entender desde o crescimento de um organismo até o funcionamento de doenças como o câncer.' },
+                    { name: 'Evolução das espécies', freq: 'media', desc: 'Seleção natural e teoria da evolução de Darwin, cobradas junto com genética em várias questões.', explain: 'Charles Darwin propôs que as espécies mudam ao longo do tempo por meio da seleção natural: indivíduos com características que os ajudam a sobreviver e se reproduzir num determinado ambiente tendem a deixar mais descendentes, passando essas características adiante. Ao longo de muitas gerações, esse processo pode levar ao surgimento de novas espécies, adaptadas a ambientes específicos — é assim que se explica, por exemplo, por que existem tantas espécies diferentes de tentilhões nas Ilhas Galápagos, cada uma adaptada a um tipo de alimento. Esse tema se conecta diretamente com genética, já que as variações que a seleção natural "escolhe" vêm de mutações e recombinações genéticas.' }
+                ]
+            },
+            {
+                id: 'quimica', area: 'natureza', name: 'Química', icon: '⚗️',
+                topics: [
+                    { name: 'Química ambiental', freq: 'alta', desc: 'Poluição, efeito estufa, chuva ácida e tratamento de água — química aplicada a problemas do mundo real.', explain: 'A química ambiental estuda as reações que afetam o meio ambiente, como o efeito estufa (gases como CO2 retêm calor na atmosfera, aumentando a temperatura global) e a chuva ácida (poluentes como óxidos de enxofre e nitrogênio reagem com a água da chuva, tornando-a ácida e prejudicando solos, plantas e construções). O tratamento de água usa reações químicas (como cloração e floculação) para remover impurezas e tornar a água própria para consumo. Esse conteúdo é cobrado justamente porque conecta a química com problemas ambientais reais e atuais, exigindo que o aluno entenda a reação por trás do fenômeno, não só o fenômeno em si.' },
+                    { name: 'Química orgânica e funções orgânicas', freq: 'alta', desc: 'Hidrocarbonetos, álcoois, ácidos — reconhecer funções orgânicas é essencial pra várias questões.', explain: 'Química orgânica é o ramo que estuda compostos baseados em carbono, o elemento capaz de formar cadeias longas e complexas que são a base de toda a vida (e de combustíveis, plásticos e remédios). As funções orgânicas classificam essas moléculas de acordo com o grupo de átomos que define seu comportamento: hidrocarbonetos (só carbono e hidrogênio, como os combustíveis), álcoois (têm o grupo -OH, como o etanol), ácidos carboxílicos (têm o grupo -COOH, como o ácido acético do vinagre). Reconhecer essas funções pela fórmula ou pelo nome ajuda a prever propriedades da substância, como se ela é inflamável, solúvel em água ou reativa.' },
+                    { name: 'Estequiometria', freq: 'media', desc: 'Cálculos de quantidade de reagentes e produtos numa reação química.', explain: 'Estequiometria é a parte da química que calcula as quantidades exatas de reagentes e produtos envolvidos numa reação, usando a equação química balanceada como um "livro de receitas". Se uma receita de bolo pede 2 ovos para 1 xícara de farinha, uma reação química também tem proporções fixas entre as substâncias — e a estequiometria calcula quanto você precisa de cada uma para obter uma quantidade desejada do produto final. Esse conteúdo aparece em questões práticas, como calcular quanto combustível é necessário para gerar certa quantidade de energia, ou quanto reagente sobra numa reação industrial.' },
+                    { name: 'Ligações químicas', freq: 'media', desc: 'Como átomos se unem (iônica, covalente, metálica) e por que isso define as propriedades dos materiais.', explain: 'Os átomos se unem para ficar mais estáveis, e o tipo de ligação que fazem determina as propriedades físicas do material formado. Na ligação iônica, um átomo doa elétrons e outro recebe, formando íons com cargas opostas que se atraem (como no sal de cozinha, NaCl); na ligação covalente, os átomos compartilham elétrons (como na água, H2O); na ligação metálica, os elétrons ficam "soltos" entre os átomos de metal, o que explica por que metais conduzem eletricidade e são maleáveis. Entender esse conceito básico ajuda a prever se uma substância vai ser sólida, se dissolve em água, ou se conduz corrente elétrica.' },
+                    { name: 'Eletroquímica', freq: 'media', desc: 'Pilhas, baterias e reações de oxirredução — comum em questões sobre energia.', explain: 'Eletroquímica estuda reações que envolvem transferência de elétrons entre substâncias, chamadas reações de oxirredução: uma substância perde elétrons (oxida) enquanto outra ganha (reduz). Pilhas e baterias funcionam justamente aproveitando esse fluxo de elétrons para gerar corrente elétrica utilizável — é por isso que uma pilha "descarrega" com o tempo, já que os reagentes vão se transformando em produtos até se esgotarem. Esse tema é cobrado principalmente em contextos de energia e sustentabilidade, como baterias de carros elétricos e formas de armazenamento de energia renovável.' }
+                ]
+            },
+            {
+                id: 'fisica', area: 'natureza', name: 'Física', icon: '⚙️',
+                topics: [
+                    { name: 'Mecânica (cinemática e dinâmica)', freq: 'alta', desc: 'Movimento, velocidade, aceleração e as leis de Newton — base de boa parte das questões de física.', explain: 'A cinemática descreve o movimento dos corpos sem se preocupar com suas causas, usando conceitos como velocidade (quão rápido algo se move) e aceleração (quão rápido a velocidade muda). Já a dinâmica explica por que os corpos se movem, e sua base são as três leis de Newton: um corpo parado tende a continuar parado a menos que uma força atue sobre ele (inércia); a força é igual à massa vezes a aceleração (F=ma); e toda ação tem uma reação de mesma intensidade e sentido oposto. Essas leis explicam desde por que você é jogado para frente quando um carro freia bruscamente até como um foguete consegue decolar.' },
+                    { name: 'Eletricidade', freq: 'alta', desc: 'Circuitos, corrente e consumo de energia elétrica — muito ligado ao dia a dia, por isso cai direto.', explain: 'A corrente elétrica é o movimento ordenado de elétrons através de um material condutor, e um circuito elétrico é o caminho fechado por onde essa corrente circula, ligando uma fonte de energia (como uma pilha ou a tomada) a um dispositivo (como uma lâmpada). A resistência elétrica de um material dificulta essa passagem de corrente e converte parte da energia elétrica em calor — é assim que funciona um chuveiro elétrico, por exemplo. Entender potência (quanta energia um aparelho consome por segundo) ajuda a calcular o consumo de energia elétrica em casa e a comparar a eficiência de diferentes aparelhos, um tema recorrente por sua aplicação direta no cotidiano.' },
+                    { name: 'Termologia', freq: 'media', desc: 'Calor, temperatura e mudanças de estado da matéria, frequente em questões com gráficos.', explain: 'Temperatura mede o quão agitadas estão as partículas de um material, enquanto calor é a energia térmica que flui de um corpo mais quente para um mais frio até que ambos atinjam o equilíbrio. Quando um material recebe ou perde calor suficiente, ele pode mudar de estado físico (fusão, ebulição, condensação, solidificação), e durante essas mudanças a temperatura fica constante mesmo que o calor continue sendo fornecido — é por isso que a água fervendo não passa de 100°C ao nível do mar, mesmo com o fogo ainda aceso. Esse comportamento costuma ser representado em gráficos de temperatura por tempo, que aparecem com frequência nas provas.' },
+                    { name: 'Ondulatória e óptica', freq: 'media', desc: 'Som, luz, espelhos e lentes — inclui fenômenos do cotidiano como o funcionamento do olho humano.', explain: 'Ondas transportam energia sem transportar matéria, e o som é uma onda mecânica que precisa de um meio (como o ar) para se propagar, enquanto a luz é uma onda eletromagnética que se propaga até no vácuo. A óptica estuda o comportamento da luz, incluindo reflexão (luz que "quica" em espelhos) e refração (luz que muda de direção ao passar de um meio para outro, como do ar para a água) — fenômenos que explicam desde a formação de imagens em espelhos e lentes até o funcionamento do olho humano, que usa uma lente natural (o cristalino) para focar a luz na retina.' }
+                ]
+            },
+            {
+                id: 'matematica', area: 'matematica', name: 'Matemática', icon: '📐',
+                topics: [
+                    { name: 'Estatística e probabilidade', freq: 'alta', desc: 'Leitura de gráficos, médias, chances de um evento — é a área da matemática mais cobrada no ENEM.', explain: 'Estatística organiza e resume grandes quantidades de dados usando medidas como média (soma dividida pela quantidade de valores), mediana (o valor do meio quando os dados estão ordenados) e moda (o valor mais frequente), ajudando a entender tendências sem precisar olhar cada dado individualmente. Probabilidade calcula a chance de um evento acontecer, dividindo o número de resultados favoráveis pelo número total de resultados possíveis. Juntos, esses conceitos aparecem em quase toda questão que envolve pesquisas, sorteios, jogos ou previsões, sendo a área da matemática mais cobrada por sua aplicação direta em situações do cotidiano.' },
+                    { name: 'Porcentagem, razão e proporção', freq: 'alta', desc: 'Aparece disfarçada em quase todo contexto: economia, saúde, consumo — essencial dominar bem.', explain: 'Porcentagem é uma forma de expressar uma razão (comparação entre duas quantidades) tendo 100 como referência — dizer que 25% de algo é o mesmo que dizer 1/4 daquilo. Proporção é a igualdade entre duas razões, muito usada para resolver problemas de "regra de três", como calcular quanto tempo leva para completar uma tarefa com mais ou menos pessoas trabalhando. Esses conceitos aparecem disfarçados em quase todo contexto de prova — descontos em compras, juros, reajustes salariais, taxas de crescimento populacional — por isso dominar bem essa base evita erros bobos em questões que, no fundo, são simples.' },
+                    { name: 'Funções (1º e 2º grau)', freq: 'alta', desc: 'Relação entre duas grandezas, gráficos de reta e parábola, usados em problemas de custo, lucro e trajetória.', explain: 'Uma função descreve como uma grandeza depende de outra: por exemplo, o preço final de uma corrida de aplicativo pode depender da distância percorrida. A função de 1º grau (y = ax + b) gera um gráfico em linha reta e representa uma relação de crescimento ou queda constante, como um custo fixo mais uma tarifa por quilômetro. A função de 2º grau (y = ax² + bx + c) gera uma parábola e aparece em situações como a trajetória de um objeto lançado ao ar ou o cálculo de lucro máximo de um produto, onde existe um ponto de máximo ou mínimo bem definido.' },
+                    { name: 'Geometria plana e espacial', freq: 'media', desc: 'Áreas, volumes e propriedades de figuras — comum em questões sobre embalagens, terrenos e construções.', explain: 'Geometria plana estuda figuras em duas dimensões (quadrados, triângulos, círculos), calculando perímetros (contorno) e áreas (espaço ocupado); geometria espacial estende esse estudo para três dimensões (cubos, cilindros, esferas), calculando também o volume (espaço interno ocupado). Esses cálculos aparecem em situações práticas como determinar quanto material é necessário para construir uma caixa, quanto tinta cobre uma parede, ou quantos metros quadrados tem um terreno. A chave para resolver esse tipo de questão é sempre identificar corretamente qual figura geométrica está sendo descrita e qual fórmula se aplica a ela.' },
+                    { name: 'Análise de gráficos e tabelas', freq: 'alta', desc: 'Ler e interpretar dados apresentados visualmente é uma habilidade cobrada em quase toda a prova, não só em matemática.', explain: 'Gráficos e tabelas são formas de apresentar dados de maneira visual e resumida, e saber lê-los corretamente é uma habilidade que vai muito além da matemática — aparece em questões de geografia, biologia, atualidades e praticamente qualquer área. O primeiro passo é sempre identificar o que cada eixo ou coluna representa (e sua unidade de medida), depois observar tendências (crescimento, queda, picos) e só então comparar valores específicos que a questão pedir. Um erro comum é responder rápido demais sem checar as legendas e escalas, o que pode levar a interpretações erradas mesmo quando o raciocínio matemático está certo.' },
+                    { name: 'Geometria analítica', freq: 'media', desc: 'Coordenadas, retas e distâncias no plano cartesiano — menos frequente, mas ainda aparece.', explain: 'Geometria analítica une álgebra e geometria representando pontos, retas e figuras através de coordenadas num plano cartesiano (os eixos x e y). Um ponto é localizado por um par de números (x, y), uma reta pode ser descrita por uma equação, e é possível calcular a distância entre dois pontos ou a inclinação de uma reta usando fórmulas específicas. Embora apareça com menos frequência que outros tópicos de matemática, esse conteúdo é útil para problemas que envolvem localização, mapas e trajetórias representadas em coordenadas.' }
+                ]
+            }
+        ];
+
+        /* ---- conteúdo aprofundado: liberado quando a matéria tem peso alto pro sonho do aluno ---- */
+        const ENEM_DEEP_TOPICS = {
+            matematica: [
+                { name: 'Matemática financeira', freq: 'alta', desc: 'Juros simples e compostos, descontos e parcelamentos — tema clássico em cursos que avaliam raciocínio quantitativo aplicado.', explain: 'Juros são o "aluguel" cobrado pelo uso do dinheiro: no juro simples, o valor cresce sempre pela mesma quantia a cada período; no juro composto, os juros passam a incidir também sobre os juros anteriores, fazendo o valor crescer de forma acelerada com o tempo — é por isso que uma dívida no cartão de crédito pode crescer tão rápido. Entender essa diferença é essencial para interpretar financiamentos, parcelamentos e investimentos, e é um dos temas mais aplicáveis à vida financeira real.' },
+                { name: 'Progressões aritméticas e geométricas', freq: 'media', desc: 'Sequências numéricas usadas em problemas de crescimento populacional, contagem e padrões.', explain: 'Uma progressão aritmética (PA) é uma sequência em que cada termo aumenta pela soma de um valor fixo (como 2, 5, 8, 11...); uma progressão geométrica (PG) é uma sequência em que cada termo é multiplicado por um valor fixo (como 2, 4, 8, 16...), crescendo muito mais rápido. Esses padrões aparecem em situações como cálculo de prestações, crescimento populacional (que costuma seguir uma PG) ou disposição de objetos em fileiras (que costuma seguir uma PA), e reconhecer qual dos dois padrões está presente é o primeiro passo pra resolver o problema.' },
+                { name: 'Trigonometria no triângulo retângulo', freq: 'media', desc: 'Seno, cosseno e tangente aparecem em problemas de distância, altura e inclinação de estruturas.', explain: 'Em um triângulo retângulo, seno, cosseno e tangente são razões entre os lados que permitem calcular distâncias e alturas sem precisar medir diretamente — basta saber um ângulo e um lado. Por exemplo, para descobrir a altura de um prédio sem escalá-lo, basta medir o ângulo de visão até o topo a partir de um ponto conhecido e aplicar a tangente desse ângulo. Esse raciocínio é usado em engenharia, arquitetura e navegação sempre que é preciso calcular alturas ou distâncias inacessíveis diretamente.' },
+                { name: 'Noções de cálculo e taxas de variação', freq: 'media', desc: 'Como uma grandeza varia em relação à outra — base para entender velocidade, aceleração e crescimento.', explain: 'Taxa de variação mede o quanto uma grandeza muda em relação a outra — a velocidade, por exemplo, é a taxa de variação da posição em relação ao tempo. Noções de cálculo (mesmo que informais, sem fórmulas avançadas) ajudam a entender como algo está "acelerando" ou "desacelerando", como o ritmo de crescimento de uma população ou a queda de valor de um produto ao longo do tempo. Esse raciocínio é a base conceitual para cursos de exatas que trabalham com modelos de crescimento, física e economia.' }
+            ],
+            fisica: [
+                { name: 'Leis de Newton aplicadas', freq: 'alta', desc: 'Força, massa e aceleração explicadas em situações práticas — usado como base pra quase todo problema de mecânica.', explain: 'As leis de Newton, quando aplicadas a situações concretas, explicam fenômenos do dia a dia: por que um cinto de segurança é necessário (inércia do corpo em movimento), por que carros pesados precisam de mais força para acelerar (F=ma) e como um foguete se impulsiona empurrando gases para trás (ação e reação). Dominar a aplicação prática dessas leis, e não só a fórmula decorada, é o que permite resolver problemas de engenharia envolvendo estruturas, veículos e máquinas.' },
+                { name: 'Energia: cinética, potencial e conservação', freq: 'alta', desc: 'Transformação de energia em sistemas mecânicos, muito cobrado em contextos de veículos e quedas.', explain: 'Energia cinética é a energia do movimento (quanto mais rápido e mais pesado um objeto, mais energia cinética ele tem); energia potencial é a energia "armazenada" pela posição, como um objeto no alto de uma rampa antes de descer. A lei da conservação de energia diz que essa energia não se cria nem se destrói, apenas se transforma — quando um objeto cai, a energia potencial vira cinética. Esse princípio é usado para calcular desde a velocidade de uma montanha-russa até a eficiência energética de sistemas mecânicos.' },
+                { name: 'Eletromagnetismo aplicado', freq: 'media', desc: 'Motores, geradores e transformadores explicados a partir de campos elétricos e magnéticos.', explain: 'O eletromagnetismo estuda a relação entre eletricidade e magnetismo: uma corrente elétrica cria um campo magnético ao seu redor, e um campo magnético em movimento pode gerar corrente elétrica. Esse princípio é a base de motores elétricos (que transformam eletricidade em movimento) e geradores (que transformam movimento em eletricidade, como em usinas hidrelétricas e eólicas). Entender esse conceito ajuda a compreender desde o funcionamento de um carregador de celular até como a energia elétrica chega até sua casa.' },
+                { name: 'Termodinâmica e máquinas térmicas', freq: 'media', desc: 'Como calor se transforma em trabalho — a base teórica de motores e sistemas de refrigeração.', explain: 'Termodinâmica estuda como a energia térmica (calor) pode ser transformada em trabalho mecânico útil, e é a base teórica por trás de motores a combustão, geladeiras e ar-condicionados. Uma máquina térmica nunca converte 100% do calor em trabalho — parte sempre se perde, uma limitação descrita pela segunda lei da termodinâmica. Esse tema é importante para entender a eficiência energética de motores e por que sempre existe algum desperdício de energia em processos de conversão.' }
+            ],
+            quimica: [
+                { name: 'Estequiometria industrial', freq: 'alta', desc: 'Cálculo de rendimento e proporção de reagentes em processos de produção em larga escala.', explain: 'Na indústria, a estequiometria é usada para calcular exatamente quanto de matéria-prima é necessário para produzir uma quantidade desejada de produto final, minimizando desperdício e custo. O rendimento de uma reação mostra o quanto do produto teórico realmente foi obtido na prática, já que nem toda reação é 100% eficiente. Esse cálculo é essencial em processos como produção de fertilizantes, combustíveis e medicamentos em larga escala, onde pequenas ineficiências geram grandes custos.' },
+                { name: 'Termoquímica', freq: 'media', desc: 'Energia liberada ou absorvida em reações — essencial pra entender processos industriais e combustíveis.', explain: 'Toda reação química envolve troca de energia: reações exotérmicas liberam calor (como a queima de combustíveis), e reações endotérmicas absorvem calor do ambiente. Medir essa energia é essencial para calcular a eficiência de combustíveis, projetar processos industriais que precisam de aquecimento ou resfriamento, e até entender por que uma bolsa de gelo instantâneo esfria ao ser ativada. Esse conceito conecta diretamente química com física (energia) e com aplicações industriais reais.' },
+                { name: 'Cinética química', freq: 'media', desc: 'Velocidade das reações e fatores que a alteram, como temperatura e catalisadores.', explain: 'Cinética química estuda a velocidade com que uma reação acontece e quais fatores podem acelerá-la ou desacelerá-la: aumentar a temperatura geralmente acelera a reação (as partículas se movem mais rápido e colidem mais); um catalisador acelera a reação sem ser consumido nela, reduzindo a energia necessária para que ela ocorra. Esse conhecimento é aplicado desde o desenvolvimento de remédios até processos industriais que precisam ser rápidos e eficientes em larga escala.' },
+                { name: 'Química orgânica aplicada', freq: 'alta', desc: 'Polímeros, combustíveis e fármacos — funções orgânicas usadas na indústria química e farmacêutica.', explain: 'A química orgânica aplicada usa o conhecimento sobre moléculas de carbono para desenvolver produtos do dia a dia: polímeros (moléculas longas repetidas) formam plásticos e borrachas; combustíveis como gasolina e etanol são hidrocarbonetos que liberam energia ao queimar; fármacos são desenvolvidos ajustando a estrutura de moléculas orgânicas para que atuem de forma específica no corpo humano. Esse tema mostra como conceitos abstratos de química se transformam em produtos concretos usados por bilhões de pessoas.' }
+            ],
+            biologia: [
+                { name: 'Fisiologia humana aprofundada', freq: 'alta', desc: 'Sistemas circulatório, nervoso e endócrino explicados em detalhe — base pra qualquer curso da área da saúde.', explain: 'O sistema circulatório transporta oxigênio, nutrientes e hormônios pelo corpo através do sangue, bombeado pelo coração; o sistema nervoso controla e coordena as ações do corpo através de impulsos elétricos que viajam pelos neurônios; o sistema endócrino regula funções do corpo por meio de hormônios liberados na corrente sanguínea. Entender como esses três sistemas se comunicam entre si é a base para compreender praticamente qualquer doença ou tratamento estudado em cursos da área da saúde.' },
+                { name: 'Genética e biotecnologia', freq: 'alta', desc: 'Engenharia genética, células-tronco e terapia gênica, temas cada vez mais presentes na prova.', explain: 'A biotecnologia usa o conhecimento sobre genes e DNA para desenvolver aplicações práticas: a engenharia genética permite modificar diretamente o material genético de um organismo (como bactérias que produzem insulina humana); células-tronco têm a capacidade de se transformar em diferentes tipos de células, sendo estudadas para regenerar tecidos danificados; a terapia gênica busca corrigir doenças hereditárias substituindo ou reparando genes defeituosos. Esses temas avançam rapidamente e por isso aparecem cada vez mais em provas atualizadas.' },
+                { name: 'Microbiologia e imunologia', freq: 'media', desc: 'Vírus, bactérias e o funcionamento do sistema imunológico — direto ligado a vacinas e doenças.', explain: 'Microbiologia estuda organismos microscópicos como vírus e bactérias, que podem ser causadores de doenças ou, em muitos casos, benéficos (como bactérias que ajudam a digestão). Imunologia estuda como o corpo se defende desses invasores, através de células de defesa que reconhecem e combatem agentes estranhos. Vacinas funcionam justamente "treinando" o sistema imunológico a reconhecer um invasor específico antes mesmo de um contato real com ele, preparando uma defesa mais rápida no futuro.' },
+                { name: 'Ecologia de populações', freq: 'media', desc: 'Dinâmica de crescimento populacional, competição e capacidade de suporte de um ambiente.', explain: 'Ecologia de populações estuda como o número de indivíduos de uma espécie muda ao longo do tempo em um determinado ambiente, considerando fatores como disponibilidade de alimento, espaço e competição com outras espécies. Todo ambiente tem uma "capacidade de suporte" — um limite de indivíduos que ele consegue sustentar — e quando uma população ultrapassa esse limite, tende a haver uma queda brusca por falta de recursos. Esse conceito é usado para entender desde o crescimento de pragas agrícolas até discussões sobre o crescimento da população humana e seus limites ambientais.' }
+            ],
+            portugues: [
+                { name: 'Análise linguística e reescrita de frases', freq: 'alta', desc: 'Habilidade de identificar erros e melhorar a clareza de um texto, cobrada em cursos que exigem boa comunicação.', explain: 'Análise linguística vai além da gramática decorada: é a habilidade de identificar por que uma frase ficou confusa, ambígua ou mal construída, e saber reescrevê-la de forma mais clara e direta. Isso envolve reconhecer problemas como ambiguidade (frase com duplo sentido), redundância (repetição desnecessária) e uso inadequado de pronomes ou conectivos. Essa habilidade é extremamente valorizada em qualquer profissão que exija comunicação escrita clara, de relatórios técnicos a e-mails profissionais.' },
+                { name: 'Intertextualidade', freq: 'media', desc: 'Como um texto dialoga com outro (parodia, citação, referência) — comum em anúncios e tirinhas da prova.', explain: 'Intertextualidade acontece quando um texto faz referência a outro texto já existente, seja para concordar, criticar ou brincar com ele. A paródia recria um texto original mudando seu sentido, geralmente de forma bem-humorada ou crítica; a citação usa diretamente um trecho de outra obra; a alusão faz referência mais sutil, sem citar diretamente. Reconhecer essas relações entre textos é essencial para entender charges, anúncios publicitários e até memes, que frequentemente dialogam com obras literárias, músicas ou fatos históricos conhecidos.' },
+                { name: 'Leitura crítica de discurso', freq: 'alta', desc: 'Identificar a intenção por trás de um texto argumentativo ou persuasivo, essencial em áreas de humanas e comunicação.', explain: 'Leitura crítica é a habilidade de identificar não só o que um texto diz, mas por que ele foi construído daquele jeito e a quem ele beneficia. Um discurso político, por exemplo, pode usar linguagem cuidadosamente escolhida para influenciar a opinião do público sem parecer que está fazendo isso diretamente. Desenvolver essa habilidade envolve perguntar sempre "quem está falando, por quê, e o que esse texto quer que eu pense ou faça" — uma competência essencial em áreas como direito, jornalismo e ciências sociais.' }
+            ],
+            redacao: [
+                { name: 'Argumentação com dados e estatísticas', freq: 'alta', desc: 'Usar números e pesquisas de forma correta pra sustentar uma tese, valorizado em cursos que exigem pensamento analítico.', explain: 'Usar dados e estatísticas de forma correta em uma argumentação significa não apenas citar um número, mas explicar o que ele revela e como ele sustenta sua tese. Por exemplo, dizer "segundo o IBGE, X% da população não tem acesso a saneamento básico" é mais forte do que apenas afirmar "o saneamento básico é um problema no Brasil", porque mostra a dimensão real da questão. É importante também ter cuidado para não inventar números ou usar dados fora de contexto, já que isso enfraquece a credibilidade do argumento.' },
+                { name: 'Contra-argumentação', freq: 'media', desc: 'Reconhecer e rebater um ponto de vista contrário fortalece a argumentação da redação.', explain: 'Contra-argumentar é antecipar um possível ponto de vista contrário ao seu e mostrar por que ele não invalida sua tese — essa técnica mostra que você pensou no tema de forma completa, e não apenas de um único ângulo. Por exemplo, ao defender mais investimento em transporte público, você pode reconhecer que isso tem um custo alto, mas argumentar que o benefício a longo prazo (menos poluição, menos congestionamento) compensa esse investimento. Textos que usam essa técnica costumam parecer mais maduros e convincentes.' },
+                { name: 'Propostas de intervenção viáveis', freq: 'alta', desc: 'Detalhar quem faz, como faz e com qual finalidade — propostas vagas perdem pontos mesmo com bom texto.', explain: 'Uma proposta de intervenção "viável" é aquela que realmente poderia ser aplicada na prática, e não apenas uma ideia genérica e abstrata. Em vez de sugerir algo vago como "conscientizar a população", uma proposta viável detalha um agente específico (como as escolas), uma ação concreta (criar um programa de educação ambiental), o meio pelo qual isso seria feito (com aulas práticas mensais) e a finalidade (reduzir o descarte incorreto de lixo). Pensar em propostas assim exige entender minimamente como as instituições citadas (governo, escolas, mídia) realmente funcionam.' }
+            ],
+            historia: [
+                { name: 'História econômica do Brasil', freq: 'media', desc: 'Ciclos econômicos (açúcar, ouro, café) e como eles moldaram a desigualdade regional do país.', explain: 'A economia brasileira, desde a colonização, se organizou em "ciclos" de produtos que dominaram a exportação em diferentes períodos: o ciclo do açúcar no Nordeste, o do ouro em Minas Gerais e o do café no Sudeste. Cada ciclo concentrou riqueza e infraestrutura na região produtora enquanto deixava outras áreas menos desenvolvidas, o que ajuda a explicar por que hoje existem desigualdades econômicas entre as regiões do Brasil. Entender essa história econômica é fundamental para interpretar debates atuais sobre desenvolvimento regional.' },
+                { name: 'Movimentos sociais contemporâneos', freq: 'alta', desc: 'Lutas por direitos civis, ambientais e trabalhistas no Brasil e no mundo recente.', explain: 'Movimentos sociais contemporâneos são organizações e mobilizações que surgiram principalmente a partir da segunda metade do século XX, lutando por pautas como direitos civis, proteção ambiental e direitos trabalhistas. Diferente de movimentos mais antigos, muitos desses movimentos usam redes sociais e mídia digital para se organizar e ganhar visibilidade rapidamente, alcançando escala global em pouco tempo. Esse tema conecta história recente com atualidades, sendo frequentemente citado tanto em questões objetivas quanto como repertório em redações.' },
+                { name: 'Processos de independência na América Latina', freq: 'media', desc: 'Comparação entre os processos de independência do Brasil e de outros países latino-americanos.', explain: 'A maioria dos países latino-americanos conquistou independência das metrópoles europeias no início do século XIX, mas de formas bem diferentes: o Brasil teve uma independência relativamente pacífica, mantendo a monarquia com Dom Pedro I; já países como México e Argentina passaram por guerras de independência mais longas e violentas contra a Espanha. Comparar esses processos ajuda a entender por que as estruturas políticas e sociais desses países se desenvolveram de formas distintas depois da independência.' }
+            ],
+            geografia: [
+                { name: 'Geopolítica de recursos naturais', freq: 'alta', desc: 'Disputas por água, petróleo e terras raras — tema cada vez mais presente em questões de geografia.', explain: 'Recursos naturais estratégicos como petróleo, água doce e "terras raras" (minerais essenciais para tecnologia, como baterias e celulares) estão distribuídos de forma desigual pelo mundo, o que gera disputas geopolíticas entre países que os possuem e os que dependem deles. Países com grandes reservas desses recursos ganham influência econômica e política internacional, enquanto os que dependem de importação ficam vulneráveis a crises de abastecimento e preço. Esse tema é cada vez mais relevante conforme a demanda por tecnologia e energia limpa aumenta globalmente.' },
+                { name: 'Cadeias produtivas e comércio internacional', freq: 'media', desc: 'Como um produto é fabricado e distribuído globalmente, ligado a questões econômicas e ambientais.', explain: 'Uma cadeia produtiva mostra todas as etapas pelas quais um produto passa até chegar ao consumidor final: um celular, por exemplo, pode ter matéria-prima extraída em um país, ser montado em outro e vendido em um terceiro. Essa fragmentação global de produção reduz custos, mas também aumenta a distância entre onde o produto é feito e onde os impactos ambientais e sociais dessa produção acontecem. Entender essas cadeias ajuda a analisar debates sobre condições de trabalho, sustentabilidade e desigualdade entre países.' },
+                { name: 'Mudanças climáticas e políticas públicas', freq: 'alta', desc: 'Acordos internacionais, metas de redução de carbono e o papel do Brasil nesse cenário.', explain: 'Como as mudanças climáticas afetam o planeta inteiro, países tentam coordenar ações através de acordos internacionais, como o Acordo de Paris, que define metas de redução de emissão de gases de efeito estufa para cada nação. O Brasil tem um papel importante nesse cenário por abrigar a Amazônia, uma das maiores florestas tropicais do mundo, essencial para regular o clima global — por isso o desmatamento brasileiro é acompanhado de perto internacionalmente. Esse tema conecta geografia física, política internacional e economia de forma bem direta.' }
+            ],
+            'filosofia-sociologia': [
+                { name: 'Ética aplicada e dilemas contemporâneos', freq: 'media', desc: 'Discussões sobre tecnologia, meio ambiente e ciência analisadas sob uma ótica filosófica.', explain: 'Ética aplicada usa conceitos filosóficos para pensar dilemas concretos do mundo atual: é ético usar inteligência artificial para tomar decisões que afetam vidas humanas? Até onde a ciência pode intervir na natureza em nome do progresso? Diferente da ética teórica (que discute princípios abstratos do que é certo ou errado), a ética aplicada busca soluções práticas para situações reais e complexas, muitas vezes sem uma resposta única e definitiva. Esse tipo de reflexão é cada vez mais cobrado por conectar filosofia com avanços tecnológicos e científicos recentes.' },
+                { name: 'Teorias sociológicas clássicas', freq: 'media', desc: 'Ideias de Durkheim, Marx e Weber usadas para explicar desigualdade e organização social.', explain: 'Émile Durkheim, Karl Marx e Max Weber são considerados os "pais fundadores" da sociologia moderna, cada um com uma forma diferente de explicar como a sociedade funciona. Durkheim estudava como normas e valores compartilhados mantêm a sociedade coesa; Marx analisava a sociedade a partir da luta entre classes sociais e da desigualdade gerada pelo capitalismo; Weber destacava como a cultura, a religião e a burocracia moldam o comportamento social. Conhecer essas três perspectivas diferentes ajuda a analisar qualquer fenômeno social sob mais de um ângulo.' },
+                { name: 'Cidadania digital e novas tecnologias', freq: 'media', desc: 'Como redes sociais e IA impactam a vida em sociedade — tema recente e cada vez mais cobrado.', explain: 'Cidadania digital discute os direitos e deveres das pessoas no ambiente online: privacidade de dados, liberdade de expressão nas redes sociais, e os limites éticos do uso de inteligência artificial no dia a dia. Redes sociais mudaram a forma como as pessoas se informam e se relacionam, mas também trouxeram desafios como desinformação e polarização de opiniões. Esse tema é cada vez mais cobrado justamente por ser recente e estar diretamente ligado à vida cotidiana de quem está prestando a prova.' }
+            ]
+        };
+
+        let enemState = { area: 'todas', query: '' };
+
+        /* ---- match matérias do sonho escolhido com as matérias do ENEM ---- */
+        function normalizeText(s) {
+            return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+        }
+
+        const SUBJECT_ALIAS = {
+            'matematica': 'matematica',
+            'portugues': 'portugues',
+            'literatura': 'portugues',
+            'redacao': 'redacao',
+            'biologia': 'biologia',
+            'quimica': 'quimica',
+            'fisica': 'fisica',
+            'historia': 'historia',
+            'geografia': 'geografia',
+            'filosofia': 'filosofia-sociologia',
+            'sociologia': 'filosofia-sociologia'
+        };
+
+        function getMatchedEnemIds(dreamId) {
+            const subjects = getMatchedEnemSubjects(dreamId);
+            return subjects.map(s => s.id);
+        }
+
+        /* Retorna as matérias do ENEM conectadas ao sonho, já com o peso (posição em que a
+           matéria aparece nos "subjects" do sonho = o quanto ela normalmente pesa pra essa área) */
+        function getMatchedEnemSubjects(dreamId) {
+            const d = DREAMS[dreamId];
+            if (!d || !d.subjects) return [];
+            const seen = new Set();
+            const result = [];
+            d.subjects.forEach((s, i) => {
+                const key = normalizeText(s.mat);
+                const matchKey = Object.keys(SUBJECT_ALIAS).find(alias => key.includes(alias));
+                if (!matchKey) return;
+                const id = SUBJECT_ALIAS[matchKey];
+                if (seen.has(id)) return;
+                seen.add(id);
+                result.push({ id, weight: i === 0 ? 'alto' : 'medio' });
+            });
+            return result;
+        }
+
+        function weightLabel(w) {
+            return w === 'alto' ? 'PESO ALTO PRO SEU CURSO' : 'PESO MÉDIO PRO SEU CURSO';
+        }
+
+        function renderEnemReco() {
+            const box = document.getElementById('enemReco');
+            const chipsEl = document.getElementById('enemRecoChips');
+            const dream = DREAMS[state.dream];
+            if (!state.dream || !dream) { box.classList.add('hide'); return; }
+
+            const matched = getMatchedEnemSubjects(state.dream);
+            if (!matched.length) { box.classList.add('hide'); return; }
+
+            document.getElementById('enemRecoDream').textContent = dream.name.toLowerCase();
+            chipsEl.innerHTML = '';
+            matched.forEach(m => {
+                const subj = ENEM_SUBJECTS.find(s => s.id === m.id);
+                if (!subj) return;
+                const chip = document.createElement('button');
+                chip.className = 'enem-reco-chip' + (m.weight === 'alto' ? ' peso-alto' : '');
+                chip.innerHTML = `${subj.icon} ${subj.name} <span class="enem-reco-chip-peso">${m.weight === 'alto' ? 'peso alto' : 'peso médio'}</span>`;
+                chip.onclick = () => {
+                    enemState.area = 'todas';
+                    enemState.query = '';
+                    document.getElementById('enemSearch').value = '';
+                    renderEnemTabs();
+                    renderEnemList({ openOnly: m.id, scrollTo: m.id });
+                };
+                chipsEl.appendChild(chip);
+            });
+            box.classList.remove('hide');
+
+            const chipTop = document.getElementById('enemProfileChip');
+            document.getElementById('enemChipEmoji').textContent = dream.emoji;
+            document.getElementById('enemChipName').textContent = dream.name;
+            chipTop.classList.remove('hide');
+        }
+
+        function renderEnemTabs() {
+            const tabsEl = document.getElementById('enemTabs');
+            const all = [{ id: 'todas', name: 'Todas', icon: '✦' }, ...ENEM_AREAS];
+            tabsEl.innerHTML = '';
+            all.forEach(a => {
+                const btn = document.createElement('button');
+                btn.className = 'enem-tab' + (enemState.area === a.id ? ' active' : '');
+                btn.textContent = `${a.icon} ${a.name}`;
+                btn.onclick = () => { enemState.area = a.id; renderEnemTabs(); renderEnemList(); };
+                tabsEl.appendChild(btn);
+            });
+        }
+
+        function renderEnemList(opts) {
+            opts = opts || {};
+            const listEl = document.getElementById('enemList');
+            const emptyEl = document.getElementById('enemEmpty');
+            const q = enemState.query.trim().toLowerCase();
+            const matched = state.dream ? getMatchedEnemSubjects(state.dream) : [];
+            const weightById = {};
+            matched.forEach(m => { weightById[m.id] = m.weight; });
+            listEl.innerHTML = '';
+            let anyVisible = false;
+
+            const subjectsToRender = ENEM_SUBJECTS
+                .filter(s => enemState.area === 'todas' || s.area === enemState.area)
+                .slice()
+                .sort((a, b) => {
+                    const rank = w => w === 'alto' ? 0 : w === 'medio' ? 1 : 2;
+                    return rank(weightById[a.id]) - rank(weightById[b.id]);
+                });
+
+            subjectsToRender.forEach(subject => {
+                const weight = weightById[subject.id];
+                const isMatch = !!weight;
+
+                let baseTopics = subject.topics.filter(t =>
+                    !q || t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || subject.name.toLowerCase().includes(q)
+                ).map(t => ({ ...t, deep: false }));
+
+                let deepTopics = [];
+                if (weight === 'alto' && ENEM_DEEP_TOPICS[subject.id]) {
+                    deepTopics = ENEM_DEEP_TOPICS[subject.id].filter(t =>
+                        !q || t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q)
+                    ).map(t => ({ ...t, deep: true }));
+                }
+
+                const filteredTopics = baseTopics.concat(deepTopics);
+                if (!filteredTopics.length) return;
+                anyVisible = true;
+
+                const forceOpen = !!q || opts.openOnly === subject.id || weight === 'alto';
+
+                const card = document.createElement('div');
+                card.className = 'enem-subject' + (forceOpen ? ' open' : '') + (isMatch ? ' is-match' : '') + (weight === 'alto' ? ' is-priority' : '');
+                card.id = 'enem-subj-' + subject.id;
+                card.innerHTML = `
+                    <button class="enem-subject-head">
+                        <div class="enem-subject-icon">${subject.icon}</div>
+                        <div class="enem-subject-titles">
+                            <div class="enem-subject-name">${subject.name}</div>
+                            <div class="enem-subject-count">${filteredTopics.length} assunto${filteredTopics.length > 1 ? 's' : ''}${deepTopics.length ? ' · ' + deepTopics.length + ' aprofundado' + (deepTopics.length > 1 ? 's' : '') : ''}</div>
+                        </div>
+                        ${isMatch ? `<span class="enem-match-badge ${weight === 'alto' ? 'peso-alto' : 'peso-medio'}">${weightLabel(weight)}</span>` : ''}
+                        <span class="enem-chevron">▾</span>
+                    </button>
+                    <div class="enem-topics">
+                        ${weight === 'alto' && deepTopics.length ? '<div class="enem-deep-note">📌 Essa matéria costuma pesar mais na avaliação pra sua área — por isso trouxemos assuntos mais a fundo aqui.</div>' : ''}
+                        ${filteredTopics.map(t => `
+                            <div class="enem-topic${t.deep ? ' enem-topic-deep' : ''}">
+                                <div class="enem-topic-head">
+                                    <div class="enem-topic-name">${t.deep ? '🔎 ' : ''}${t.name}</div>
+                                    <span class="enem-freq ${t.freq}">${t.freq === 'alta' ? 'ALTA INCIDÊNCIA' : 'INCIDÊNCIA MÉDIA'}</span>
+                                    <span class="enem-topic-chevron">▾</span>
+                                </div>
+                                <div class="enem-topic-desc">${t.desc}</div>
+                                ${t.explain ? `<div class="enem-topic-explain"><span class="enem-topic-explain-label">📘 entenda o assunto</span>${t.explain}</div>` : ''}
+                            </div>`).join('')}
+                    </div>`;
+                card.querySelector('.enem-subject-head').onclick = () => card.classList.toggle('open');
+                card.querySelectorAll('.enem-topic').forEach(topicEl => {
+                    topicEl.querySelector('.enem-topic-head').onclick = () => topicEl.classList.toggle('open');
+                });
+                listEl.appendChild(card);
+            });
+
+            emptyEl.classList.toggle('hide', anyVisible);
+
+            if (opts.scrollTo) {
+                const el = document.getElementById('enem-subj-' + opts.scrollTo);
+                if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 60);
+            }
+        }
+
+        document.getElementById('enemSearch').addEventListener('input', e => {
+            enemState.query = e.target.value;
+            renderEnemList();
+        });
+
+        function renderEnemScreen() {
+            renderEnemReco();
+            renderEnemTabs();
+            renderEnemList();
+        }
+
+        let state = { dream: null, quizIndex: 0, quizScores: {}, currentQuiz: null, vocIndex: 0, vocAxisScores: {}, vocTalentScores: {} };
+
+        renderEnemTabs();
+        renderEnemList();
+
+        /* ---------------- RENDER: DREAM PICKER ---------------- */
+        const dreamGrid = document.getElementById('dreamGrid');
+        Object.entries(DREAMS).forEach(([id, d]) => {
+            if (d.hidden) return;
+            const card = document.createElement('button');
+            card.className = 'dream-card';
+            card.innerHTML = `<span class="dream-emoji">${d.emoji}</span><div class="dream-name">${d.name}</div><div class="dream-tag">${d.tag}</div>` +
+                (d.isHub ? '<div class="dream-hub-badge">Ver opções →</div>' : '');
+            card.onclick = () => d.isHub ? openEngHub(id) : selectDream(id);
+            dreamGrid.appendChild(card);
+        });
+
+        const presetIds = Object.keys(DREAMS).filter(id => !DREAMS[id].hidden);
+
+        function openEngHub(hubId) {
+            const hub = DREAMS[hubId];
+            const grid = document.getElementById('engModalGrid');
+            grid.innerHTML = '';
+            hub.variantIds.forEach(vid => {
+                const v = DREAMS[vid];
+                const card = document.createElement('button');
+                card.className = 'dream-card';
+                card.innerHTML = `<span class="dream-emoji">${v.emoji}</span><div class="dream-name">${v.name}</div><div class="dream-tag">${v.tag}</div>`;
+                card.onclick = () => { closeEngModal(); selectDream(vid); };
+                grid.appendChild(card);
+            });
+            document.getElementById('engModalTitle').textContent = `Qual ${hub.name.toLowerCase()} combina com você?`;
+            document.getElementById('engModalOverlay').classList.add('show');
+        }
+
+        function closeEngModal() {
+            document.getElementById('engModalOverlay').classList.remove('show');
+        }
+
+        document.getElementById('engModalClose').onclick = closeEngModal;
+        document.getElementById('engModalOverlay').addEventListener('click', e => {
+            if (e.target.id === 'engModalOverlay') closeEngModal();
+        });
+
+        function selectDream(id) {
+            state.dream = id;
+            document.querySelectorAll('.dream-card').forEach(c => c.classList.remove('selected'));
+            const highlightId = DREAMS[id].parentHub || id;
+            const idx = presetIds.indexOf(highlightId);
+            if (idx > -1) [...dreamGrid.children][idx].classList.add('selected');
+            renderDashboard();
+            renderSimulator();
+            renderEnemScreen();
+            setTimeout(() => goTo('dashboard'), 280);
+        }
+
+        /* ---------------- RENDER: DASHBOARD ---------------- */
+        function renderDashboard() {
+            const d = DREAMS[state.dream];
+            if (!d) return;
+            document.getElementById('chipEmoji').textContent = d.emoji;
+            document.getElementById('chipName').textContent = d.name;
+            document.getElementById('flDreamName').textContent = d.name.toLowerCase();
+            document.getElementById('flDreamLabel').textContent = d.name.toUpperCase();
+
+            const haveEl = document.getElementById('skillsHave'); haveEl.innerHTML = '';
+            d.have.forEach(s => { const p = document.createElement('span'); p.className = 'skill-pill'; p.textContent = s; haveEl.appendChild(p); });
+            const growEl = document.getElementById('skillsGrow'); growEl.innerHTML = '';
+            d.grow.forEach(s => { const p = document.createElement('span'); p.className = 'skill-pill'; p.textContent = s; growEl.appendChild(p); });
+
+            const subEl = document.getElementById('subjectList'); subEl.innerHTML = '';
+            d.subjects.forEach(s => {
+                const card = document.createElement('div'); card.className = 'subject-card';
+                card.innerHTML = `<button class="subject-head"><div class="subject-icon">${s.icon}</div><div class="subject-name">${s.mat}</div><span class="subject-chevron">▼</span></button><div class="subject-example">Para quem quer ser <b>${d.name.toLowerCase()}</b>: ${s.ex}</div>`;
+                card.querySelector('.subject-head').onclick = () => card.classList.toggle('open');
+                subEl.appendChild(card);
+            });
+        }
+
+        /* ---------------- RENDER: SIMULATOR ---------------- */
+        function renderSimulator() {
+            const d = DREAMS[state.dream];
+            if (!d) return;
+            document.getElementById('simDreamName').textContent = d.name;
+            const tl = document.getElementById('simTimeline'); tl.innerHTML = '';
+            d.day.forEach(step => {
+                const div = document.createElement('div'); div.className = 'sim-step';
+                div.innerHTML = `<div class="sim-time">${step.t}</div><div class="sim-activity">${step.a}</div><span class="sim-tag">${step.tag}</span>`;
+                tl.appendChild(div);
+            });
+        }
+
+        /* ---------------- QUIZ ---------------- */
+        const QUIZ_CACHE = {};
+        const TALENT_KEYS = ['criatividade', 'lideranca', 'logica', 'escrita', 'resolucao'];
+
+        function normTalentKey(str) {
+            return (str || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+        }
+
+        async function generateDreamQuiz(dream) {
+            const prompt = `Um aluno de escola brasileira escolheu como sonho de carreira: "${dream.name}".
+Crie um teste de autoconhecimento com 5 perguntas de cenário, ambientadas no dia a dia real de quem estuda ou trabalha para ser ${dream.name}, para descobrir qual talento predominante o aluno tem entre: criatividade, liderança, lógica, escrita/comunicação e resolução de problemas.
+
+Devolva SOMENTE um JSON válido (sem texto antes ou depois, sem markdown, sem crases) no formato exato abaixo:
+[
+  {
+    "q": "pergunta de cenário em português, ambientada no contexto de ${dream.name}, terminando com uma decisão que a pessoa precisa tomar",
+    "opts": [
+      {"t": "opção de resposta concreta ligada a um dos talentos", "k": "criatividade"},
+      {"t": "opção de resposta concreta ligada a outro talento", "k": "lideranca"},
+      {"t": "opção de resposta concreta ligada a outro talento", "k": "logica"},
+      {"t": "opção de resposta concreta ligada a outro talento", "k": "escrita"}
+    ]
+  }
+]
+(o array completo deve ter exatamente 5 perguntas assim, cada uma com exatamente 4 opções)
+
+Regras importantes:
+- O valor de "k" em cada opção deve ser exatamente um destes textos, sem acento: criatividade, lideranca, logica, escrita, resolucao.
+- Dentro da mesma pergunta, não repita o mesmo valor de "k" em duas opções.
+- Ao longo das 5 perguntas, distribua os 5 talentos de forma equilibrada (nem todas as perguntas precisam ter os mesmos 4 talentos).
+- As perguntas e opções devem ser cenários concretos e realistas de ${dream.name}, nunca perguntas genéricas de personalidade.
+- Não numere as perguntas nem as opções no texto.`;
+
+            const response = await fetch("https://api.anthropic.com/v1/messages", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    model: "claude-sonnet-4-6",
+                    max_tokens: 1600,
+                    messages: [{ role: "user", content: prompt }]
+                })
+            });
+            const data = await response.json();
+            const textBlock = (data.content || []).find(b => b.type === 'text');
+            if (!textBlock) throw new Error('no text');
+            let clean = textBlock.text.trim().replace(/^```json/, '').replace(/^```/, '').replace(/```$/, '').trim();
+            const parsed = JSON.parse(clean);
+            if (!Array.isArray(parsed) || parsed.length === 0) throw new Error('bad shape');
+            parsed.forEach(q => {
+                if (!q.q || !Array.isArray(q.opts) || q.opts.length === 0) throw new Error('bad question shape');
+                q.opts.forEach(o => {
+                    o.k = normTalentKey(o.k);
+                    if (!TALENT_KEYS.includes(o.k)) throw new Error('bad talent key');
+                });
+            });
+            return parsed;
+        }
+
+        function renderQuiz() {
+            state.quizIndex = 0; state.quizScores = {};
+            const dreamId = state.dream;
+            const dream = DREAMS[dreamId];
+            const card = document.getElementById('quizCard');
+
+            if (QUIZ_CACHE[dreamId]) {
+                state.currentQuiz = QUIZ_CACHE[dreamId];
+                showQuizQuestion();
+                return;
+            }
+
+            card.innerHTML = `<div class="quiz-loading">
+    <span class="quiz-spinner"></span>
+    <p>Preparando perguntas sobre ${dream ? dream.name.toLowerCase() : 'a sua área'}...</p>
+  </div>`;
+
+            generateDreamQuiz(dream || {}).then(quiz => {
+                QUIZ_CACHE[dreamId] = quiz;
+                state.currentQuiz = quiz;
+                showQuizQuestion();
+            }).catch(() => {
+                state.currentQuiz = QUIZ;
+                showQuizQuestion();
+            });
+        }
+        function showQuizQuestion() {
+            const card = document.getElementById('quizCard');
+            const quiz = state.currentQuiz || QUIZ;
+            if (state.quizIndex >= quiz.length) { return showQuizResult(); }
+            const q = quiz[state.quizIndex];
+            let bars = ''; for (let i = 0; i < quiz.length; i++) { bars += `<i class="${i < state.quizIndex ? 'done' : ''}"></i>`; }
+            card.innerHTML = `<div class="quiz-progress">${bars}</div><div class="quiz-q">${q.q}</div>` +
+                q.opts.map(o => `<button class="quiz-opt" data-k="${o.k}">${o.t}</button>`).join('');
+            card.querySelectorAll('.quiz-opt').forEach(btn => {
+                btn.onclick = () => {
+                    const k = btn.dataset.k;
+                    state.quizScores[k] = (state.quizScores[k] || 0) + 1;
+                    state.quizIndex++;
+                    showQuizQuestion();
+                };
+            });
+        }
+        function showQuizResult() {
+            const card = document.getElementById('quizCard');
+            let top = 'criatividade', max = -1;
+            Object.entries(state.quizScores).forEach(([k, v]) => { if (v > max) { max = v; top = k; } });
+            const t = TALENTS[top] || TALENTS.criatividade;
+            const dream = DREAMS[state.dream];
+            const idealKey = dream && dream.talent ? normTalentKey(dream.talent) : null;
+            const idealTalent = idealKey ? TALENTS[idealKey] : null;
+
+            let matchNote = '';
+            if (dream) {
+                const dreamName = dream.name.toLowerCase();
+                if (idealTalent && idealKey === top) {
+                    matchNote = `<div class="talent-match talent-match-yes">🎯 <b>${t.name}</b> é uma das habilidades mais valorizadas por quem quer ser ${dreamName} — seu talento já combina com esse caminho.</div>`;
+                } else if (idealTalent) {
+                    matchNote = `<div class="talent-match">💡 Quem quer ser ${dreamName} costuma se apoiar bastante em <b>${idealTalent.name.toLowerCase()}</b>. Seu talento em ${t.name.toLowerCase()} é um ótimo ponto de partida — e vale ir desenvolvendo essa outra habilidade também.</div>`;
+                } else {
+                    matchNote = `<div class="talent-match">Isso te ajuda a entender melhor como aproveitar seu jeito no caminho de quem quer ser ${dreamName}.</div>`;
+                }
+            }
+
+            card.innerHTML = `<div class="talent-result">
+    <div class="talent-badge">${t.emoji}</div>
+    <div class="eyebrow" style="justify-content:center;">Seu talento em destaque</div>
+    <h2>${t.name}</h2>
+    <p>${t.desc}</p>
+    ${matchNote}
+    <button class="btn btn-sm" onclick="renderQuiz()">Refazer teste</button>
+  </div>`;
+        }
+
+        /* ---------------- VOCATIONAL TEST (recomendação de curso) ---------------- */
+        function renderVocacional() {
+            state.vocIndex = 0;
+            state.vocAxisScores = {};
+            state.vocTalentScores = {};
+            renderVocQuestion();
+        }
+
+        function renderVocQuestion() {
+            const card = document.getElementById('vocCard');
+            if (state.vocIndex >= VOC_QUIZ.length) { return showVocResult(); }
+            const q = VOC_QUIZ[state.vocIndex];
+            let bars = ''; for (let i = 0; i < VOC_QUIZ.length; i++) { bars += `<i class="${i < state.vocIndex ? 'done' : ''}"></i>`; }
+            card.innerHTML = `<div class="quiz-progress">${bars}</div><div class="quiz-q">${q.q}</div>` +
+                q.opts.map((o, i) => `<button class="quiz-opt" data-i="${i}">${o.t}</button>`).join('');
+            card.querySelectorAll('.quiz-opt').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const o = q.opts[parseInt(btn.dataset.i, 10)];
+                    state.vocAxisScores[o.axis] = (state.vocAxisScores[o.axis] || 0) + 1;
+                    const tk = normTalentKey(o.k);
+                    state.vocTalentScores[tk] = (state.vocTalentScores[tk] || 0) + 1;
+                    state.vocIndex++;
+                    renderVocQuestion();
+                });
+            });
+        }
+
+        function computeVocResults() {
+            const scored = Object.entries(DREAM_AXIS).map(([id, axis]) => {
+                const d = DREAMS[id];
+                const talentKey = normTalentKey(d.talent);
+                const axisScore = state.vocAxisScores[axis] || 0;
+                const talentScore = state.vocTalentScores[talentKey] || 0;
+                return { id, d, score: axisScore * 10 + talentScore };
+            });
+            scored.sort((a, b) => b.score - a.score);
+            return scored.slice(0, 3);
+        }
+
+        function showVocResult() {
+            const card = document.getElementById('vocCard');
+            const top3 = computeVocResults();
+
+            const cardsHtml = top3.map((r, i) => `
+    <button class="voc-result-card ${i === 0 ? 'rank-1' : ''}" onclick="selectDream('${r.id}')">
+      <span class="voc-rank">${i === 0 ? '🏆' : '#' + (i + 1)}</span>
+      <span class="voc-result-emoji">${r.d.emoji}</span>
+      <span class="voc-result-info">
+        <div class="name">${r.d.name}</div>
+        <div class="tag">${r.d.tag}</div>
+      </span>
+      <span class="voc-result-arrow">→</span>
+    </button>`).join('');
+
+            card.innerHTML = `<div class="voc-intro">
+    <div class="talent-badge">🧭</div>
+    <div class="eyebrow" style="justify-content:center;">Resultado do teste vocacional</div>
+    <h2>Esses cursos combinam mais com você</h2>
+    <p>A gente cruzou suas respostas com o perfil de cada profissão. Toque em uma delas pra começar a explorar esse caminho — dá pra mudar depois.</p>
+    <div class="voc-result-list">${cardsHtml}</div>
+    <button class="btn btn-sm btn-ghost" onclick="renderVocacional()">Refazer teste</button>
+  </div>`;
+        }
+
+        /* ---------------- STUDY TIMER (POMODORO) ---------------- */
+        (function () {
+            const RING_R = 70;
+            const RING_CIRC = 2 * Math.PI * RING_R;
+            const originalTitle = document.title;
+
+            const card = document.getElementById('studyTimerCard');
+            if (!card) return;
+
+            const ringFg = document.getElementById('ringFg');
+            const display = document.getElementById('timerDisplay');
+            const startBtn = document.getElementById('timerStartBtn');
+            const resetBtn = document.getElementById('timerResetBtn');
+            const countEl = document.getElementById('studyTimerCount');
+            const modeBtns = document.querySelectorAll('.timer-mode-btn');
+
+            const cloud = document.getElementById('timerCloud');
+            const cloudDisplay = document.getElementById('cloudTimerDisplay');
+            const cloudPauseBtn = document.getElementById('cloudPauseBtn');
+            const cloudStopBtn = document.getElementById('cloudStopBtn');
+
+            const timer = {
+                totalSeconds: 25 * 60,
+                remaining: 25 * 60,
+                mode: 'foco',
+                intervalId: null,
+                running: false,
+                sessionsToday: 0
+            };
+
+            let audioCtx = null;
+            function ensureAudio() {
+                try {
+                    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    else if (audioCtx.state === 'suspended') audioCtx.resume();
+                } catch (e) { audioCtx = null; }
+            }
+
+            function beep() {
+                if (!audioCtx) return;
+                [0, 0.18, 0.36].forEach(t => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 740;
+                    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime + t);
+                    gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + t + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + t + 0.16);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(audioCtx.currentTime + t);
+                    osc.stop(audioCtx.currentTime + t + 0.18);
+                });
+            }
+
+            function fmt(sec) {
+                const m = Math.floor(sec / 60).toString().padStart(2, '0');
+                const s = Math.floor(sec % 60).toString().padStart(2, '0');
+                return `${m}:${s}`;
+            }
+
+            function render() {
+                const timeText = fmt(timer.remaining);
+                display.textContent = timeText;
+                cloudDisplay.textContent = timeText;
+                const progress = timer.totalSeconds > 0 ? (timer.totalSeconds - timer.remaining) / timer.totalSeconds : 0;
+                ringFg.style.strokeDashoffset = RING_CIRC * progress;
+                document.title = timer.running ? `${timeText} · ${originalTitle}` : originalTitle;
+                cloudPauseBtn.textContent = timer.running ? '⏸' : '▶';
+                cloudPauseBtn.title = timer.running ? 'Pausar' : 'Continuar';
+                cloud.classList.toggle('paused', !timer.running);
+            }
+
+            function showCloud() {
+                cloud.classList.add('show');
+            }
+
+            function hideCloud() {
+                cloud.classList.remove('show');
+            }
+
+            function setMode(mode, mins) {
+                pause();
+                timer.mode = mode;
+                timer.totalSeconds = mins * 60;
+                timer.remaining = mins * 60;
+                card.classList.remove('mode-foco', 'mode-pausa', 'mode-pausaLonga');
+                card.classList.add('mode-' + mode);
+                cloud.classList.remove('mode-foco', 'mode-pausa', 'mode-pausaLonga');
+                cloud.classList.add('mode-' + mode);
+                startBtn.innerHTML = '▶ Iniciar';
+                render();
+            }
+
+            function start() {
+                if (timer.running || timer.remaining <= 0) return;
+                ensureAudio();
+                timer.running = true;
+                startBtn.innerHTML = '⏸ Pausar';
+                showCloud();
+                render();
+                timer.intervalId = setInterval(() => {
+                    timer.remaining--;
+                    render();
+                    if (timer.remaining <= 0) complete();
+                }, 1000);
+            }
+
+            function pause() {
+                clearInterval(timer.intervalId);
+                timer.running = false;
+                if (startBtn) {
+                    startBtn.innerHTML = (timer.remaining > 0 && timer.remaining < timer.totalSeconds) ? '▶ Continuar' : '▶ Iniciar';
+                }
+                render();
+            }
+
+            function reset() {
+                clearInterval(timer.intervalId);
+                timer.running = false;
+                timer.remaining = timer.totalSeconds;
+                startBtn.innerHTML = '▶ Iniciar';
+                hideCloud();
+                render();
+            }
+
+            function complete() {
+                clearInterval(timer.intervalId);
+                timer.running = false;
+                beep();
+                card.classList.add('pulse');
+                cloud.classList.add('pulse');
+                setTimeout(() => card.classList.remove('pulse'), 650);
+                setTimeout(() => { cloud.classList.remove('pulse'); hideCloud(); }, 900);
+                if (timer.mode === 'foco') {
+                    timer.sessionsToday++;
+                    countEl.textContent = `${timer.sessionsToday} sessão${timer.sessionsToday === 1 ? '' : 'ões'} hoje`;
+                }
+                timer.remaining = timer.totalSeconds;
+                startBtn.innerHTML = '▶ Iniciar';
+                render();
+            }
+
+            ringFg.style.strokeDasharray = RING_CIRC;
+            ringFg.style.strokeDashoffset = 0;
+
+            modeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modeBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    setMode(btn.dataset.mode, parseInt(btn.dataset.mins, 10));
+                });
+            });
+
+            startBtn.addEventListener('click', () => {
+                if (timer.running) {
+                    pause();
+                } else {
+                    start();
+                    goTo('enem');
+                }
+            });
+            resetBtn.addEventListener('click', reset);
+
+            cloudPauseBtn.addEventListener('click', () => (timer.running ? pause() : start()));
+            cloudStopBtn.addEventListener('click', reset);
+
+            render();
+        })();
+
+        /* ---------------- NAVIGATION ---------------- */
+        function goTo(name) {
+            if (name === 'hero' && state.dream) { name = 'dashboard'; }
+            if (name !== 'hero' && name !== 'picker' && name !== 'enem' && name !== 'vocacional' && !state.dream) { name = 'picker'; }
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + name).classList.add('active');
+            document.querySelectorAll('.navitem').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`.navitem[data-nav="${name === 'picker' ? 'hero' : name}"]`).forEach(b => b.classList.add('active'));
+            if (name === 'quiz') renderQuiz();
+            if (name === 'enem') renderEnemScreen();
+            if (name === 'vocacional') renderVocacional();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const appnav = document.getElementById('appnav');
+            if (state.dream) {
+                appnav.classList.add('show');
+                document.querySelectorAll('.navitem[data-nav="hero"]').forEach(b => b.classList.add('hide'));
+            } else {
+                appnav.classList.remove('show');
+                document.querySelectorAll('.navitem[data-nav="hero"]').forEach(b => b.classList.remove('hide'));
+            }
+        }
+
+        document.querySelectorAll('.navitem').forEach(btn => {
+            btn.addEventListener('click', () => goTo(btn.dataset.nav));
+        });
+    </script>
+</body>
+
+</html>
